@@ -1,8 +1,8 @@
 <?php 
     include '../includes/config.php';
 
-    $id_user = $_GET["id_user"];
-    $hapus = mysqli_query($conn,"DELETE FROM t_user WHERE id_user=$id_user");
+    $kode_barang = $_GET["kode_barang"]; //megambil kode barang
+    $hapus = mysqli_query($conn,"DELETE FROM t_barang WHERE kode_barang='$kode_barang'"); //menghapus data di t_user berdasarkan kode barang yang didapat
 
     if($hapus){
         echo "

@@ -3,8 +3,10 @@
     include '../includes/navbar.php'; 
     include '../includes/config.php'; 
 
+    //mengambil data pada tabel user
     $dataUser = mysqli_query($conn,"SELECT * FROM t_user");
 
+    //mengambil data pada tabel user jika user menekan tombol cari
     if( isset($_POST['cari'])){
         $katakunci = $_POST['katakunci'];
         $dataUser = mysqli_query($conn,"SELECT * FROM t_user 
@@ -43,11 +45,11 @@
         foreach($dataUser as $data){ ?> 
         <tr>
             <td><?= $i; ?></td>
-            <td><?= $data['nama']; ?></td>
-            <td><?= $data['username']; ?></td>
+            <td><?= htmlspecialchars($data['nama']); ?></td>
+            <td><?= htmlspecialchars($data['username']); ?></td>
             <td>
                 <a href="edit-user.php?id_user=<?php echo $data["id_user"]; ?>" class="btn btn-warning"><i class='bx bx-edit'></i></a>
-                <a href="aksi-hapus.php?id_user=<?php echo $data["id_user"]; ?>" onclick="return confirm('Yakin?')" class="btn btn-danger"><i class='bx bx-trash'></i></a>
+                <a href="hapus-user.php?id_user=<?php echo $data["id_user"]; ?>" onclick="return confirm('Yakin?')" class="btn btn-danger"><i class='bx bx-trash'></i></a>
             </td>
         </tr>
         <?php $i++; } ?>

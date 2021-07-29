@@ -3,8 +3,8 @@
     include '../includes/navbar.php';
     include '../includes/config.php';
 
-    $pesan = "";
-    $id_user = $_GET["id_user"];
+    $pesan = ""; //diguanakan sebagai pesan eror validasi 
+    $id_user = $_GET["id_user"]; //mengambil id_user
     $ambil = mysqli_query($conn,"SELECT * FROM t_user WHERE id_user = $id_user");
     $data = mysqli_fetch_array($ambil);
 
@@ -14,23 +14,25 @@
         $nama = htmlspecialchars($_POST['nama']);
         $username = htmlspecialchars($_POST['username']);
 
+        //validasi jika nama kosong
         if(empty($nama)){
             $pesan = "<div class='alert alert-danger' role='alert'>
                           Nama tidak boleh kosong!
                         </div>";
         }
+
+        //validasi jika username kosong
         elseif(empty($username)){
             $pesan = "<div class='alert alert-danger' role='alert'>
                           Username tidak boleh kosong!
                         </div>";
-        }else {
+        }else{
             $query = "UPDATE t_user SET 
                     nama = '$nama',
                     username = '$username'
                     WHERE id_user = $id_user ";
-            $update = mysqli_query($conn, $query);
+            $update = mysqli_query($conn, $query);  //mengubah data di tabel t_user berdasarkan id_user yang didapatkan
             if($update){
-                
                 $pesan = "<div class='alert alert-success' role='alert'>
                               Ubah data user berhasil
                             </div>";
