@@ -13,6 +13,7 @@
         $id_user = htmlspecialchars($_POST['id_user']);
         $nama = htmlspecialchars($_POST['nama']);
         $username = htmlspecialchars($_POST['username']);
+        $password = htmlspecialchars($_POST['password']);
 
         //validasi jika nama kosong
         if(empty($nama)){
@@ -21,11 +22,32 @@
                         </div>";
         }
 
+        //validasi jika nama mengandung selain huruf
+        if (!preg_match("/^[a-zA-Z ]*$/",$nama)) {
+              $pesan = "<div class='alert alert-danger' role='alert'>
+                          Nama hanya boleh berisi huruf!
+                        </div>"; 
+        }
+
         //validasi jika username kosong
         elseif(empty($username)){
             $pesan = "<div class='alert alert-danger' role='alert'>
                           Username tidak boleh kosong!
                         </div>";
+        }
+
+        //validasi jika password kosong
+        elseif(empty($password)){
+            $pesan = "<div class='alert alert-danger' role='alert'>
+                          Password wajib diisi
+                        </div>";
+        }
+
+        //validasi jika password kurang dari 8 karakter
+        elseif(strlen($password) < 8) {
+            $pesan = "<div class='alert alert-danger' role='alert'>
+                      Password harus 8 karakter
+                    </div>";    
         }else{
             $query = "UPDATE t_user SET 
                     nama = '$nama',
@@ -80,7 +102,7 @@
                                     <label class="col-form-label">Password</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" readonly value="<?= $data['password'] ?>" class="form-control">
+                                    <input type="text" name="password" placeholder="Silahkan masukan password baru" class="form-control">
                                 </div>
                             </div>
 

@@ -17,6 +17,13 @@
                         </div>";
         }
 
+        //validasi jika nama mengandung selain huruf
+        if (!preg_match("/^[a-zA-Z ]*$/",$nama)) {
+              $pesan = "<div class='alert alert-danger' role='alert'>
+                          Nama hanya boleh berisi huruf!
+                        </div>"; 
+        }
+
         //validasi jika username kosong
         elseif(empty($username)){
             $pesan = "<div class='alert alert-danger' role='alert'>
