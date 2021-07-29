@@ -12,6 +12,17 @@ include '../includes/navbar.php';
                         <form action="" class="form-inline justify-content-center">
                             <div class="row g-3 align-items-center mb-3">
                                 <div class="col-md-3">
+                                    <label class="col-form-label">Tipe</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Barang Masuk</option>
+                                        <option value="1">Barang Keluar</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row g-3 align-items-center mb-3">
+                                <div class="col-md-3">
                                     <label class="col-form-label">Nama Barang</label>
                                 </div>
                                 <div class="col-md-6">
