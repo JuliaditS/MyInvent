@@ -1,6 +1,17 @@
-<?php
-include '../includes/header.php';
-include '../includes/navbar.php';
+<?php 
+    include '../includes/header.php';
+    include '../includes/navbar.php'; 
+    include '../includes/config.php';
+
+    //mengambil data pada t_barang
+    $dataBarang = mysqli_query($conn,"SELECT * FROM t_barang");
+
+    //mengambil data pada t_barang jika user menekan tombol cari
+    if( isset($_POST['cari'])){
+        $katakunci = $_POST['katakunci'];
+        $dataBarang = mysqli_query($conn,"SELECT * FROM t_barang 
+                                        WHERE nama LIKE '%$katakunci%' OR harga LIKE  '%$katakunci%'");
+    }
 ?>
 
 <div class="container">
@@ -12,9 +23,9 @@ include '../includes/navbar.php';
         </div>
 
         <div class="col-6 col-md-3">
-            <form class="d-flex justify-end">
-                <input class="form-control me-2" type="search" placeholder="Masukkan kata kunci..." aria-label="Search">
-                <button class="btn btn-dark" type="submit">Search</button>
+            <form class="d-flex justify-end" action="" method="POST">
+                <input class="form-control me-2" type="text" name="katakunci" placeholder="Masukkan kata kunci..." aria-label="Search">
+                <button class="btn btn-dark" type="submit" name="cari">Cari</button>
             </form>
         </div>
     </div>
@@ -29,26 +40,20 @@ include '../includes/navbar.php';
             <th class="col-md-2">Harga</th>
             <th class="col-md-1">Aksi</th>
         </tr>
+        <?php 
+        $i = 1;
+        foreach($dataBarang as $data){ ?> 
         <tr>
-            <td>1</td>
-            <td>Pulpen</td>
-            <td>1200 Pcs</td>
-            <td>12.000</td>
+            <td><?= $i; ?></td>
+            <td><?= $data['nama']; ?></td>
+            <td><?= $data['stok']; ?></td>
+            <td><?= rupiah($data['harga']); ?></td>
             <td>
-                <a href="edit-barang.php" class="btn btn-warning"><i class='bx bx-edit'></i></a>
-                <a href="" class="btn btn-danger"><i class='bx bx-trash'></i></a>
+                <a href="edit-barang.php?kode_barang=<?php echo $data["kode_barang"]; ?>" class="btn btn-warning"><i class='bx bx-edit'></i></a>
+                <a href="hapus-barang.php?kode_barang=<?php echo $data["kode_barang"]; ?>" onclick="return confirm('Yakin?')" class="btn btn-danger"><i class='bx bx-trash'></i></a>
             </td>
         </tr>
-        <tr>
-            <td>2</td>
-            <td>Buku tulis</td>
-            <td>120 pcs</td>
-            <td>12.000</td>
-            <td>
-                <a href="f235.php" class="btn btn-warning"><i class='bx bx-edit'></i></a>
-                <a href="" class="btn btn-danger"><i class='bx bx-trash'></i></a>
-            </td>
-        </tr>
+        <?php $i++; } ?>
 
     </table>
     <nav aria-label="Page navigation example">
