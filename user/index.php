@@ -1,9 +1,17 @@
-<?php
-include '../includes/header.php';
+<?php 
+    include '../includes/header.php';
+    include '../includes/navbar.php'; 
+    include '../includes/config.php'; 
+
+    $dataUser = mysqli_query($conn,"SELECT * FROM t_user");
+
+    if( isset($_POST['cari'])){
+        $katakunci = $_POST['katakunci'];
+        $dataUser = mysqli_query($conn,"SELECT * FROM t_user 
+                                        WHERE nama LIKE '%$katakunci%' OR username LIKE  '%$katakunci%'");
+    }
 ?>
-<?php
-include '../includes/navbar.php';
-?>
+
 
 <div class="container">
     <div class="row mt-5">
@@ -14,9 +22,9 @@ include '../includes/navbar.php';
         </div>
 
         <div class="col-6 col-md-3">
-            <form class="d-flex justify-end">
-                <input class="form-control me-2" type="search" placeholder="Masukkan kata kunci..." aria-label="Search">
-                <button class="btn btn-dark" type="submit">Search</button>
+            <form class="d-flex justify-end" action="" method="POST">
+                <input class="form-control me-2" type="text" name="katakunci" placeholder="Masukkan kata kunci..." aria-label="Search">
+                <button class="btn btn-dark" type="submit" name="cari">Cari</button>
             </form>
         </div>
     </div>
@@ -30,24 +38,19 @@ include '../includes/navbar.php';
             <th class="col-md-2">Username</th>
             <th class="col-md-1">Aksi</th>
         </tr>
+        <?php 
+        $i = 1;
+        foreach($dataUser as $data){ ?> 
         <tr>
-            <td>1</td>
-            <td>Juliadit Syahpputra</td>
-            <td>JuliaditS</td>
+            <td><?= $i; ?></td>
+            <td><?= $data['nama']; ?></td>
+            <td><?= $data['username']; ?></td>
             <td>
-                <a href="edit-user.php" class="btn btn-warning"><i class='bx bx-edit'></i></a>
-                <a href="" class="btn btn-danger"><i class='bx bx-trash'></i></a>
+                <a href="edit-user.php?id_user=<?php echo $data["id_user"]; ?>" class="btn btn-warning"><i class='bx bx-edit'></i></a>
+                <a href="aksi-hapus.php?id_user=<?php echo $data["id_user"]; ?>" onclick="return confirm('Yakin?')" class="btn btn-danger"><i class='bx bx-trash'></i></a>
             </td>
         </tr>
-        <tr>
-            <td>2</td>
-            <td>Resa Endrawan</td>
-            <td>Resaendr</td>
-            <td>
-                <a href="f235.php" class="btn btn-warning"><i class='bx bx-edit'></i></a>
-                <a href="" class="btn btn-danger"><i class='bx bx-trash'></i></a>
-            </td>
-        </tr>
+        <?php $i++; } ?>
 
     </table>
     <nav aria-label="Page navigation example">
