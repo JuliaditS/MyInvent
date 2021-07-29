@@ -2,7 +2,7 @@
 	session_start();
 	$host       =   "localhost";
 	$user       =   "root";
-	$password   =   "";
+	$password   =   "123";
 	$database   =   "siabangade";
 	$conn = mysqli_connect($host, $user, $password, $database);
 		if($conn === false){

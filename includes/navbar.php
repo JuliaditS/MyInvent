@@ -24,7 +24,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="transaksi/barang-masuk.php">Barang Masuk</a></li>
-                        <li><a class="dropdown-item" href="barang/barang-keluar.php">Barang Keluar</a></li>
+                        <li><a class="dropdown-item" href="transaksi/barang-keluar.php">Barang Keluar</a></li>
                     </ul>
                 </li>
 
