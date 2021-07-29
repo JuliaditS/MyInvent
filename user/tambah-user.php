@@ -49,7 +49,7 @@
             $md5 = md5($password);
 
             //memasukan data ke tabel t_user
-            $masuk = mysqli_query($conn,"INSERT INTO t_user VALUES('','$username','$md5','$nama')");
+            $masuk = mysqli_query($conn,"INSERT INTO t_user VALUES(null,'$username','$md5','$nama')");
             if($masuk){
                 $pesan = "<div class='alert alert-success' role='alert'>
                           Tambah data pegawai berhasil
