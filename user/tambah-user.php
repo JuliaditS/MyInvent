@@ -45,10 +45,17 @@ if (isset($_POST['submit'])) {
     } else {
         $md5 = md5($password);
 
+<<<<<<< HEAD
         //memasukan data ke tabel t_user
         $masuk = mysqli_query($conn, "INSERT INTO t_user VALUES('','$username','$md5','$nama')");
         if ($masuk) {
             $pesan = "<div class='alert alert-success' role='alert'>
+=======
+            //memasukan data ke tabel t_user
+            $masuk = mysqli_query($conn,"INSERT INTO t_user VALUES(null,'$username','$md5','$nama')");
+            if($masuk){
+                $pesan = "<div class='alert alert-success' role='alert'>
+>>>>>>> 1a14e9a44831b5c3670b7098b56fc5975dfa873b
                           Tambah data pegawai berhasil
                         </div>";
             header("Refresh: 2, url=index.php");
