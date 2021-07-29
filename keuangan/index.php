@@ -1,24 +1,30 @@
 <?php
+include '../includes/config.php';
 include '../includes/header.php';
-?>
-<?php
 include 'navbar-keuangan.php';
+if(isset($_POST['cari'])){
+    $cari = $_POST['cari'];
+    $pendapat = mysqli_query($conn, "SELECT tanggal,COUNT(IF (tipe='masuk',id_pembayaran,NULL)) AS 'transaksi Masuk', COUNT(IF (tipe='keluar',id_pembayaran,NULL)) AS 'transaksi Keluar', (SUM(IF (tipe='keluar',total_harga,0))-SUM(IF (tipe='masuk',total_harga,0))) AS Pendapatan FROM `t_pembayaran` where tanggal like '%$cari%' GROUP BY tanggal");
+}else{
+    $pendapat = mysqli_query($conn, "SELECT tanggal,COUNT(IF (tipe='masuk',id_pembayaran,NULL)) AS 'transaksi Masuk', COUNT(IF (tipe='keluar',id_pembayaran,NULL)) AS 'transaksi Keluar', (SUM(IF (tipe='keluar',total_harga,0))-SUM(IF (tipe='masuk',total_harga,0))) AS Pendapatan FROM `t_pembayaran` GROUP BY tanggal");
+}
+
 ?>
 
 <div class="container">
     <div class="row mt-3">
-        <!-- <div class="col-6 col-md-9">
+        <div class="col-6 col-md-9">
             <div class="tbhdata__search">
-                <a href="tambah-transaksi.php" class="btn btn-dark d-inline">Tambah Transaksi</a>
+                <a href="cetak.php" class="btn btn-dark d-inline">Cetak</a>
             </div>
-        </div> -->
+        </div>
 
-        <!-- <div class="col-6 col-md-3">
-            <form class="d-flex justify-end">
-                <input class="form-control me-2" type="search" placeholder="Masukkan kata kunci..." aria-label="Search">
-                <button class="btn btn-dark" type="submit">Search</button>
+        <div class="col-6 col-md-3">
+            <form action="index.php" method="POST" class="d-flex justify-end">
+                <input class="form-control me-2" name="cari" type="search" placeholder="Masukkan kata kunci..." aria-label="Search">
+                <button class="btn btn-dark" namevalue="$cari" type="submit">Search</button>
             </form>
-        </div> -->
+        </div>
     </div>
 </div>
 
@@ -29,24 +35,23 @@ include 'navbar-keuangan.php';
         <tr>
             <th class="col-md-1">No</th>
             <th class="col-md-2">Tanggal</th>
-            <th class="col-md-2">Barang masuk</th>
-            <th class="col-md-2">Barang keluar</th>
+            <th class="col-md-2">Transaksi masuk</th>
+            <th class="col-md-2">Transaksi keluar</th>
             <th class="col-md-1">Pendapatan</th>
         </tr>
+        <?php 
+        $no = 0;
+        while($data = mysqli_fetch_array($pendapat)){
+            $no = $no + 1; 
+        ?>
         <tr>
-            <td>1</td>
-            <td>12/22/2021</td>
-            <td>120</td>
-            <td>22</td>
-            <td>400.000</td>
+            <td><?php echo $no;?></td>
+            <td><?php echo $data['tanggal'];?></td>
+            <td><?php echo $data['transaksi Masuk'];?> </td>
+            <td><?php echo $data['transaksi Keluar'];?></td>
+            <td><?php echo $data['Pendapatan'];?></td>
         </tr>
-        <tr>
-            <td>2</td>
-            <td>12/22/2021</td>
-            <td>120</td>
-            <td>22</td>
-            <td>400.000</td>
-        </tr>
+        <?php } ?>
     </table>
 </div>
 
