@@ -1,26 +1,52 @@
 <?php
 include '../includes/header.php';
-include '../includes/navbar.php';
 ?>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../dashboard.php">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownData" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Data
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownData">
+                        <li><a class="dropdown-item" href="../user/index.php">Data User</a></li>
+                        <li><a class="dropdown-item" href="../barang/index.php">Data Barang</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Transaksi
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="../transaksi/barang-masuk.php">Barang Masuk</a></li>
+                        <li><a class="dropdown-item" href="../transaksi/barang-keluar.php">Barang Keluar</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../keuangan/index.php">Keuangan</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <section id="cover">
     <div id="cover-caption">
         <div id="container" class="container mt-3">
-            <h5 class="mb-3">Tambah Transaksi</h5>
+            <h5 class="mb-3">Tambah Transaksi Barang Keluar</h5>
             <div class="row">
                 <div class="col-md-6">
                     <div class="info-form">
                         <form action="" class="form-inline justify-content-center">
-                            <div class="row g-3 align-items-center mb-3">
-                                <div class="col-md-3">
-                                    <label class="col-form-label">Tipe</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected>Barang Masuk</option>
-                                        <option value="1">Barang Keluar</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="row g-3 align-items-center mb-3">
                                 <div class="col-md-3">
                                     <label class="col-form-label">Nama Barang</label>

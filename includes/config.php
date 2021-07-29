@@ -1,8 +1,8 @@
 <?php 
-	session_start();
+	// session_start();
 	$host       =   "localhost";
 	$user       =   "root";
-	$password   =   "123";
+	$password   =   "";
 	$database   =   "siabangade";
 	$conn = mysqli_connect($host, $user, $password, $database);
 		if($conn === false){
@@ -15,5 +15,3 @@
 	return $hasil_rupiah;
  
 	}
-?>
-
