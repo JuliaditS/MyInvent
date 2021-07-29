@@ -2,7 +2,7 @@
 include '../includes/header.php';
 ?>
 <?php
-include '../includes/navbar.php';
+include 'navbar-keuangan.php';
 ?>
 
 <div class="container">

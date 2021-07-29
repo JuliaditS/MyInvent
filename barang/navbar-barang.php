@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="../">Navbar</a>
+        <a class="navbar-brand" href="../dashboard.php">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -14,8 +14,8 @@
                         Data
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownData">
-                        <li><a class="dropdown-item" href="user/index.php">Data User</a></li>
-                        <li><a class="dropdown-item" href="barang/index.php">Data Barang</a></li>
+                        <li><a class="dropdown-item" href="../user/index.php">Data User</a></li>
+                        <li><a class="dropdown-item" href="../barang/index.php">Data Barang</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -23,13 +23,13 @@
                         Transaksi
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="transaksi/barang-masuk.php">Barang Masuk</a></li>
-                        <li><a class="dropdown-item" href="barang/barang-keluar.php">Barang Keluar</a></li>
+                        <li><a class="dropdown-item" href="../transaksi/barang-masuk.php">Barang Masuk</a></li>
+                        <li><a class="dropdown-item" href="../transaksi/barang-keluar.php">Barang Keluar</a></li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="keuangan/index.php">Keuangan</a>
+                    <a class="nav-link" href="../keuangan/index.php">Keuangan</a>
                 </li>
             </ul>
         </div>
