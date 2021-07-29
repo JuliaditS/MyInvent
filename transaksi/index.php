@@ -1,7 +1,12 @@
 <?php
+include '../includes/config.php';
+$querykeluar = mysqli_query($conn,"SELECT `t_barang`.*, `t_transaksi`.*, `t_pembayaran`.*, `t_pembayaran`.`tipe` FROM `t_barang` LEFT JOIN `t_transaksi` ON `t_transaksi`.`kode_barang` = `t_barang`.`kode_barang` LEFT JOIN `t_pembayaran` ON `t_transaksi`.`id_pembayaran` = `t_pembayaran`.`id_pembayaran` WHERE `t_pembayaran`.`tipe` = 'keluar'");
+
+$querymasuk = mysqli_query($conn,"SELECT `t_barang`.*, `t_transaksi`.*, `t_pembayaran`.*, `t_pembayaran`.`tipe` FROM `t_barang` LEFT JOIN `t_transaksi` ON `t_transaksi`.`kode_barang` = `t_barang`.`kode_barang` LEFT JOIN `t_pembayaran` ON `t_transaksi`.`id_pembayaran` = `t_pembayaran`.`id_pembayaran` WHERE `t_pembayaran`.`tipe` = 'keluar'");
+
+
+
 include '../includes/header.php';
-?>
-<?php
 include '../includes/navbar.php';
 ?>
 
@@ -35,21 +40,22 @@ include '../includes/navbar.php';
                     <th class="col-md-2">Total Harga</th>
                     <th class="col-md-1">Tanggal</th>
                 </tr>
+            <?php 
+            $no = 0;
+            while($datamasuk = mysqli_fetch_array($querymasuk)){
+            $no = $no + 1;
+            $totalharga = $datamasuk['jumlah'] * $datamasuk['harga'];
+            ?>
                 <tr>
-                    <td>1</td>
-                    <td>Buku Tulis</td>
-                    <td>120</td>
-                    <td>Rp. 120.000</td>
-                    <td>21/02/2021</td>
+                    <td><?php echo $no; ?></td>
+                    <td><?php echo $datamasuk['nama'];?></td>
+                    <td><?php echo $datamasuk['jumlah'];?></td>
+                    <td>Rp. <?php echo $totalharga;?></td>
+                    <td><?php echo $datamasuk['tanggal'];?></td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>pensil</td>
-                    <td>50</td>
-                    <td>Rp. 120.000</td>
-                    <td>21/02/2021</td>
-                </tr>
-
+            <?php
+            }
+            ?>
             </table>
 
         </div>
@@ -63,20 +69,22 @@ include '../includes/navbar.php';
                     <th class="col-md-2">Total Harga</th>
                     <th class="col-md-1">Tanggal</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Penggaris</td>
-                    <td>500</td>
-                    <td>Rp. 120.000</td>
-                    <td>21/02/2021</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Penghapus</td>
-                    <td>200</td>
-                    <td>Rp. 120.000</td>
-                    <td>21/02/2021</td>
-                </tr>
+                <?php 
+                $no2 = 0;
+                while($datakeluar = mysqli_fetch_array($querykeluar)){
+                $no2 = $no2 + 1;
+                $totalharga2 = $datakeluar['jumlah'] * $datakeluar['harga'];
+                ?>
+                    <tr>
+                        <td><?php echo $no2; ?></td>
+                        <td><?php echo $datakeluar['nama'];?></td>
+                        <td><?php echo $datakeluar['jumlah'];?></td>
+                        <td>Rp. <?php echo $totalharga2;?></td>
+                        <td><?php echo $datakeluar['tanggal'];?></td>
+                    </tr>
+                <?php
+                }
+                ?>
             </table>
         </div>
     </div>
