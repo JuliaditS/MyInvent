@@ -1,61 +1,58 @@
-<?php 
-    include '../includes/header.php';
-    include '../includes/navbar.php';
-    include '../includes/config.php'; 
+<?php
+include '../includes/header.php';
+include 'navbar-barang.php';
+include '../includes/config.php';
 
-    $pesan = ""; //diguanakan sebagai pesan eror validasi 
-    $kode_barang = $_GET['kode_barang']; //mengambil id_user
-    $ambil = mysqli_query($conn,"SELECT * FROM t_barang WHERE kode_barang = '$kode_barang'");
-    $data = mysqli_fetch_array($ambil);
+$pesan = ""; //diguanakan sebagai pesan eror validasi 
+$kode_barang = $_GET['kode_barang']; //mengambil id_user
+$ambil = mysqli_query($conn, "SELECT * FROM t_barang WHERE kode_barang = '$kode_barang'");
+$data = mysqli_fetch_array($ambil);
 
-    if(isset($_POST['submit'])){
-        $kode_barang = htmlspecialchars($_POST['kode_barang']);
-        $nama = htmlspecialchars($_POST['nama']);
-        $stok = htmlspecialchars($_POST['stok']);
-        $harga = htmlspecialchars($_POST['harga']);
+if (isset($_POST['submit'])) {
+    $kode_barang = htmlspecialchars($_POST['kode_barang']);
+    $nama = htmlspecialchars($_POST['nama']);
+    $stok = htmlspecialchars($_POST['stok']);
+    $harga = htmlspecialchars($_POST['harga']);
 
-        //validasi jika nama kosong
-        if(empty($nama)){
-            $pesan = "<div class='alert alert-danger' role='alert'>
+    //validasi jika nama kosong
+    if (empty($nama)) {
+        $pesan = "<div class='alert alert-danger' role='alert'>
                           Nama barang tidak boleh kosong!
                         </div>";
-        }
+    }
 
-        //validasi jika stok kosong
-        elseif(empty($stok)){
-            $pesan = "<div class='alert alert-danger' role='alert'>
+    //validasi jika stok kosong
+    elseif (empty($stok)) {
+        $pesan = "<div class='alert alert-danger' role='alert'>
                           Jumlah stok tidak boleh kosong!
                         </div>";
-        }
+    }
 
-        //validasi jika harga kosong
-        elseif(empty($harga)){
-            $pesan = "<div class='alert alert-danger' role='alert'>
+    //validasi jika harga kosong
+    elseif (empty($harga)) {
+        $pesan = "<div class='alert alert-danger' role='alert'>
                           Harga tidak boleh kosong!
                         </div>";
-        }else {
-            $query = "UPDATE t_barang SET 
+    } else {
+        $query = "UPDATE t_barang SET 
                     nama = '$nama',
                     stok = '$stok',
                     harga = '$harga'
                     WHERE kode_barang = '$kode_barang'";
-            $update = mysqli_query($conn, $query); //mengubah data di tabel t_barang berdasarkan kode barang yang didapatkan
-            if($update){
-                
-                $pesan = "<div class='alert alert-success' role='alert'>
+        $update = mysqli_query($conn, $query); //mengubah data di tabel t_barang berdasarkan kode barang yang didapatkan
+        if ($update) {
+
+            $pesan = "<div class='alert alert-success' role='alert'>
                               Ubah data barang berhasil
                             </div>";
-                header("Refresh: 2; url=index.php");
-
-            }else{
-                $pesan = "<div class='alert alert-success' role='alert'>
+            header("Refresh: 2; url=index.php");
+        } else {
+            $pesan = "<div class='alert alert-success' role='alert'>
                               Ubah data barang gagal
                             </div>";
-            }
-            
         }
-    
     }
+}
 
 ?>
 <section id="cover">

@@ -10,17 +10,24 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownData" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Data
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownData">
                         <li><a class="dropdown-item" href="user/index.php">Data User</a></li>
                         <li><a class="dropdown-item" href="barang/index.php">Data Barang</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="transaksi/index.php">Transaksi</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Transaksi
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="transaksi/barang-masuk.php">Barang Masuk</a></li>
+                        <li><a class="dropdown-item" href="barang/barang-keluar.php">Barang Keluar</a></li>
+                    </ul>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="keuangan/index.php">Keuangan</a>
                 </li>

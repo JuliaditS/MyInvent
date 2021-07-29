@@ -1,62 +1,62 @@
-<?php 
-    include '../includes/header.php';
-    include '../includes/navbar.php';
-    include '../includes/config.php';
+<?php
+include '../includes/header.php';
+include 'navbar-barang.php';
+include '../includes/config.php';
 
-    //membuat kode otomatis
-    $query = mysqli_query($conn,"SELECT MAX(kode_barang) as kode_terbesar FROM t_barang");
-    $data  = mysqli_fetch_array($query);
-    $kodeBarang  = $data['kode_terbesar'];
-    $urutan =(int)substr($kodeBarang,5,5);
-    $urutan++;
-    $huruf = "BRG";
-    $KodeBaru = $huruf.sprintf("%05s", $urutan);
+//membuat kode otomatis
+$query = mysqli_query($conn, "SELECT MAX(kode_barang) as kode_terbesar FROM t_barang");
+$data  = mysqli_fetch_array($query);
+$kodeBarang  = $data['kode_terbesar'];
+$urutan = (int)substr($kodeBarang, 5, 5);
+$urutan++;
+$huruf = "BRG";
+$KodeBaru = $huruf . sprintf("%05s", $urutan);
 
-    $pesan = ""; //diguanakan sebagai pesan eror validasi 
-    if(isset($_POST['submit'])){
-        $kode_barang = htmlspecialchars($_POST['kode_barang']);
-        $nama = htmlspecialchars($_POST['nama']);
-        $harga = htmlspecialchars($_POST['harga']);
-        $stok = htmlspecialchars($_POST['stok']);
-        $cekNama = mysqli_query($conn, "SELECT nama FROM t_barang WHERE nama = '$nama'");
+$pesan = ""; //diguanakan sebagai pesan eror validasi 
+if (isset($_POST['submit'])) {
+    $kode_barang = htmlspecialchars($_POST['kode_barang']);
+    $nama = htmlspecialchars($_POST['nama']);
+    $harga = htmlspecialchars($_POST['harga']);
+    $stok = htmlspecialchars($_POST['stok']);
+    $cekNama = mysqli_query($conn, "SELECT nama FROM t_barang WHERE nama = '$nama'");
 
-        //validasi jika nama barang kosong
-        if(empty($nama)){
-            $pesan = "<div class='alert alert-danger' role='alert'>
+    //validasi jika nama barang kosong
+    if (empty($nama)) {
+        $pesan = "<div class='alert alert-danger' role='alert'>
                           Nama barang wajib diisi!
                         </div>";
-        }
+    }
 
-        //validasi jika harga kosong
-        elseif(empty($harga)){
-            $pesan = "<div class='alert alert-danger' role='alert'>
+    //validasi jika harga kosong
+    elseif (empty($harga)) {
+        $pesan = "<div class='alert alert-danger' role='alert'>
                           Harga wajib diisi!
                         </div>";
-        }
+    }
 
-        //validasi jika stok kosong
-        elseif(empty($stok)){
-            $pesan = "<div class='alert alert-danger' role='alert'>
+    //validasi jika stok kosong
+    elseif (empty($stok)) {
+        $pesan = "<div class='alert alert-danger' role='alert'>
                           Jumlah stok wajib diisi!
                         </div>";
-        }else{
-            $harga = $harga * 1000;
+    } else {
+        $harga = $harga * 1000;
 
-            //memasukan data ke tabel t_barang
-            $masuk = mysqli_query($conn,"INSERT INTO t_barang VALUES('$kode_barang','$nama','$harga','$stok')");
-            
-            if($masuk){
-                $pesan = "<div class='alert alert-success' role='alert'>
+        //memasukan data ke tabel t_barang
+        $masuk = mysqli_query($conn, "INSERT INTO t_barang VALUES('$kode_barang','$nama','$harga','$stok')");
+
+        if ($masuk) {
+            $pesan = "<div class='alert alert-success' role='alert'>
                           Tambah data barang berhasil
                         </div>";
-                header("Refresh: 2, url=index.php");
-            }else{
-                $pesan = "<div class='alert alert-danger' role='alert'>
+            header("Refresh: 2, url=index.php");
+        } else {
+            $pesan = "<div class='alert alert-danger' role='alert'>
                           Tambah data barang gagal
                         </div>";
-            }
         }
     }
+}
 
 ?>
 <section id="cover">
@@ -118,10 +118,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
 <script>
-        $(document).ready(function(){
-            // Format mata uang.
-            $( '.format-angka' ).mask('0.000.000.000', {reverse: true});
-        })
+    $(document).ready(function() {
+        // Format mata uang.
+        $('.format-angka').mask('0.000.000.000', {
+            reverse: true
+        });
+    })
 </script>
 <?php
 include '../includes/footer.php';
