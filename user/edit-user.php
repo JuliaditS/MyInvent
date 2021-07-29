@@ -1,40 +1,31 @@
 <?php
-include '../includes/header.php';
-include '../includes/config.php';
+    include '../includes/header.php';
+    include '../includes/navbar.php';
+    include '../includes/config.php';
 
-$pesan = ""; //diguanakan sebagai pesan eror validasi 
-$id_user = $_GET["id_user"]; //mengambil id_user
-$ambil = mysqli_query($conn, "SELECT * FROM t_user WHERE id_user = $id_user");
-$data = mysqli_fetch_array($ambil);
+    $pesan = ""; //diguanakan sebagai pesan eror validasi 
+    $id_user = $_GET["id_user"]; //mengambil id_user
+    $ambil = mysqli_query($conn,"SELECT * FROM t_user WHERE id_user = $id_user");
+    $data = mysqli_fetch_array($ambil);
 
-<<<<<<< HEAD
     
     if(isset($_POST['submit'])){
         $id_user = htmlspecialchars($_POST['id_user']);
         $nama = htmlspecialchars($_POST['nama']);
         $username = htmlspecialchars($_POST['username']);
         $password = htmlspecialchars($_POST['password']);
-=======
->>>>>>> 0437112a4497aaddff5baaa891bb06828fc86183
 
-if (isset($_POST['submit'])) {
-    $id_user = htmlspecialchars($_POST['id_user']);
-    $nama = htmlspecialchars($_POST['nama']);
-    $username = htmlspecialchars($_POST['username']);
-
-    //validasi jika nama kosong
-    if (empty($nama)) {
-        $pesan = "<div class='alert alert-danger' role='alert'>
+        //validasi jika nama kosong
+        if(empty($nama)){
+            $pesan = "<div class='alert alert-danger' role='alert'>
                           Nama tidak boleh kosong!
                         </div>";
-    }
+        }
 
-<<<<<<< HEAD
-        //validasi jika nama mengandung selain huruf
-        if (!preg_match("/^[a-zA-Z ]*$/",$nama)) {
-              $pesan = "<div class='alert alert-danger' role='alert'>
-                          Nama hanya boleh berisi huruf!
-                        </div>"; 
+        elseif(!preg_match("/^[a-zA-Z ]*$/",$nama)){
+            $pesan = "<div class='alert alert-danger' role='alert'>
+                          Nama hanya boleh berupa huruf!
+                        </div>";
         }
 
         //validasi jika username kosong
@@ -49,80 +40,40 @@ if (isset($_POST['submit'])) {
             $pesan = "<div class='alert alert-danger' role='alert'>
                           Password wajib diisi
                         </div>";
+            
         }
 
         //validasi jika password kurang dari 8 karakter
         elseif(strlen($password) < 8) {
             $pesan = "<div class='alert alert-danger' role='alert'>
                       Password harus 8 karakter
-                    </div>";    
+                    </div>";
+            
         }else{
+            $md5 = md5($password);
             $query = "UPDATE t_user SET 
-=======
-    //validasi jika username kosong
-    elseif (empty($username)) {
-        $pesan = "<div class='alert alert-danger' role='alert'>
-                          Username tidak boleh kosong!
-                        </div>";
-    } else {
-        $query = "UPDATE t_user SET 
->>>>>>> 0437112a4497aaddff5baaa891bb06828fc86183
                     nama = '$nama',
-                    username = '$username'
+                    username = '$username',
+                    password = '$md5'
                     WHERE id_user = $id_user ";
-        $update = mysqli_query($conn, $query);  //mengubah data di tabel t_user berdasarkan id_user yang didapatkan
-        if ($update) {
-            $pesan = "<div class='alert alert-success' role='alert'>
+            $update = mysqli_query($conn, $query);  //mengubah data di tabel t_user berdasarkan id_user yang didapatkan
+            if($update){
+                $pesan = "<div class='alert alert-success' role='alert'>
                               Ubah data user berhasil
                             </div>";
-            header("Refresh: 2; url=index.php");
-        } else {
-            $pesan = "<div class='alert alert-success' role='alert'>
+                header("Refresh: 2; url=index.php");
+
+            }else{
+                $pesan = "<div class='alert alert-success' role='alert'>
                               Ubah data user gagal
                             </div>";
+            }
+            
         }
+    
     }
-}
-
+      
 ?>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="../dashboard.php">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownData" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Data
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownData">
-                        <li><a class="dropdown-item" href="../user/index.php">Data User</a></li>
-                        <li><a class="dropdown-item" href="../barang/index.php">Data Barang</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Transaksi
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="../transaksi/barang-masuk.php">Barang Masuk</a></li>
-                        <li><a class="dropdown-item" href="../transaksi/barang-keluar.php">Barang Keluar</a></li>
-                    </ul>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="../keuangan/index.php">Keuangan</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
 <section id="cover">
     <div id="cover-caption">
         <div id="container" class="container mt-3">
@@ -154,7 +105,7 @@ if (isset($_POST['submit'])) {
                                     <label class="col-form-label">Password</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="password" placeholder="Silahkan masukan password baru" class="form-control">
+                                    <input type="text" name="password" placeholder="Silahkan masukkan password baru..." class="form-control">
                                 </div>
                             </div>
 
