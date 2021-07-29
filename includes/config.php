@@ -1,20 +1,8 @@
-<<<<<<< HEAD
-<?php
-session_start();
-$host       =   "localhost";
-$user       =   "root";
-$password   =   "";
-$database   =   "siabangade";
-$conn = mysqli_connect($host, $user, $password, $database);
-if ($conn === false) {
-	die("ERROR: Could not connect. " . mysqli_connect_error());
-}
-=======
 <?php 
 	session_start();
 	$host       =   "localhost";
 	$user       =   "root";
-	$password   =   "";
+	$password   =   "123";
 	$database   =   "siabangade";
 	$conn = mysqli_connect($host, $user, $password, $database);
 		if($conn === false){
@@ -28,4 +16,4 @@ if ($conn === false) {
  
 	}
 ?>
->>>>>>> 406eeeecd1ed042a7b97daf23da9bb5810c27afb
+
