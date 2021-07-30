@@ -1,16 +1,6 @@
 <?php
 include '../includes/header.php';
 include '../includes/config.php';
-
-//mengambil data pada tabel user
-$dataUser = mysqli_query($conn, "SELECT * FROM t_user");
-
-//mengambil data pada tabel user jika user menekan tombol cari
-if (isset($_POST['cari'])) {
-    $katakunci = $_POST['katakunci'];
-    $dataUser = mysqli_query($conn, "SELECT * FROM t_user 
-                                        WHERE nama LIKE '%$katakunci%' OR username LIKE  '%$katakunci%'");
-}
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -46,6 +36,10 @@ if (isset($_POST['cari'])) {
                 <li class="nav-item">
                     <a class="nav-link" href="../keuangan/index.php">Keuangan</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../logout.php">Logout</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -79,26 +73,26 @@ if (isset($_POST['cari'])) {
         </tr>
         <?php
         if (!isset($_GET["dicari"])) {
+            $tipe = "semua";
+            $cari = Null;
+        } else {
+            $tipe = "cari";
+            $cari = $_GET["dicari"];
+            if ($cari == "")
                 $tipe = "semua";
-                $cari = Null;
-            } else {
-                $tipe = "cari";
-                $cari = $_GET["dicari"];
-                if ($cari=="")
-                    $tipe = "semua";
-            }
-            $batas=10;
-            $data_barang = getListUser(Null,Null,$tipe,$cari);
-            $halaman = (isset($_GET['halaman']))?(int)$_GET['halaman'] : 1;
-            $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;
-            $previous = $halaman - 1;
-            $next = $halaman + 1;
+        }
+        $batas = 10;
+        $data_barang = getListUser(Null, Null, $tipe, $cari);
+        $halaman = (isset($_GET['halaman'])) ? (int)$_GET['halaman'] : 1;
+        $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+        $previous = $halaman - 1;
+        $next = $halaman + 1;
 
-            $jumlah_data = count($data_barang);
-            $total_halaman = ceil($jumlah_data / $batas);
+        $jumlah_data = count($data_barang);
+        $total_halaman = ceil($jumlah_data / $batas);
 
-            $dataUser = getListUser($halaman_awal,$batas,$tipe,$cari); // ambil seluruh baris data
-            $i = $halaman_awal+1;
+        $dataUser = getListUser($halaman_awal, $batas, $tipe, $cari); // ambil seluruh baris data
+        $i = $halaman_awal + 1;
         foreach ($dataUser as $data) { ?>
             <tr>
                 <td><?= $i; ?></td>
@@ -115,16 +109,20 @@ if (isset($_POST['cari'])) {
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-              <li class="page-item <?php if($halaman==1) echo "disabled"; ?>"><a class="page-link" <?php if($halaman > 1){ echo "href='?halaman=$previous&dicari=$cari'"; } ?>>Previous</a></li>
-              <?php 
-              for($x=1;$x<=$total_halaman;$x++){
-               ?>
-              <li class="page-item <?php if($halaman==$x) echo "active"; ?>"><a class="page-link" href="?halaman=<?php echo $x."&dicari=".$cari ?>"><?php echo $x; ?></a></li>
-              <?php 
-              }
-               ?>
-              <li class="page-item <?php if($halaman>=$total_halaman) echo "disabled"; ?>"><a  class="page-link" <?php if($halaman < $total_halaman) { echo "href='?halaman=$next&dicari=$cari'"; } ?>>Next</a></li>
-            </ul>
+            <li class="page-item <?php if ($halaman == 1) echo "disabled"; ?>"><a class="page-link" <?php if ($halaman > 1) {
+                                                                                                        echo "href='?halaman=$previous&dicari=$cari'";
+                                                                                                    } ?>>Previous</a></li>
+            <?php
+            for ($x = 1; $x <= $total_halaman; $x++) {
+            ?>
+                <li class="page-item <?php if ($halaman == $x) echo "active"; ?>"><a class="page-link" href="?halaman=<?php echo $x . "&dicari=" . $cari ?>"><?php echo $x; ?></a></li>
+            <?php
+            }
+            ?>
+            <li class="page-item <?php if ($halaman >= $total_halaman) echo "disabled"; ?>"><a class="page-link" <?php if ($halaman < $total_halaman) {
+                                                                                                                        echo "href='?halaman=$next&dicari=$cari'";
+                                                                                                                    } ?>>Next</a></li>
+        </ul>
     </nav>
 </div>
 

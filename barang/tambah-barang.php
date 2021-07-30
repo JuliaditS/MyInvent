@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
                                     <label class="col-form-label">Kode Barang</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" readonly name="kode_barang" value="<?= $KodeBaru; ?>">
+                                    <input class="form-control" type="text" readonly name="kode_barang" value="<?= $KodeBaru; ?>">
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center mb-3">
