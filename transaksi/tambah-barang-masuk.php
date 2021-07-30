@@ -1,5 +1,6 @@
 <?php
 include '../includes/header.php';
+session_start();
 if (!isset($_SESSION["id_user"]))
     header("Location: ../index.php?error=2");
 ?>

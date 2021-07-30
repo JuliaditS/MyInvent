@@ -42,8 +42,7 @@ if (isset($_POST['submit'])) {
                           Jumlah stok wajib diisi!
                         </div>";
     } else {
-        $harga = $harga * 1000;
-
+        $harga = str_replace(".","",$harga);
         //memasukan data ke tabel t_barang
         $masuk = mysqli_query($conn, "INSERT INTO t_barang VALUES('$kode_barang','$nama','$harga','$stok')");
 

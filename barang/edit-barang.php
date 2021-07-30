@@ -37,6 +37,7 @@ if (isset($_POST['submit'])) {
                           Harga tidak boleh kosong!
                         </div>";
     } else {
+        $harga = str_replace(".","",$harga);
         $query = "UPDATE t_barang SET 
                     nama = '$nama',
                     stok = '$stok',
@@ -96,7 +97,7 @@ if (isset($_POST['submit'])) {
                                     <label class="col-form-label">Harga</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="harga" value="<?= $data['harga']; ?>" class="form-control">
+                                    <input type="text" name="harga" value="<?= $data['harga']; ?>" class="form-control format-angka">
                                 </div>
                             </div>
 
@@ -116,6 +117,16 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Format mata uang.
+        $('.format-angka').mask('0.000.000.000', {
+            reverse: true
+        });
+    })
+</script>
 <?php
 include '../includes/footer.php';
 ?>
