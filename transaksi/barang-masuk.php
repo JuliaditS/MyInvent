@@ -90,38 +90,71 @@ include '../includes/header.php';
                         <td><?php echo $datamasuk['tanggal']; ?></td>
                         <td><?php echo $datamasuk['total_harga']; ?></td>
                         <td>
-                            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#detail<?php echo $datamasuk['id_pembayaran']; ?>">
                                 Detail
-                            </button></td>
-                    </tr>
-                <?php
-                }
-                ?>
-            </table>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            </button>
+                            <div class="modal fade" id="detail<?php echo $datamasuk['id_pembayaran']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Detail Transaksi</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            ...
+                            <?php 
+                                $sql="SELECT t_barang.nama AS 'nama', t_barang.harga AS 'harga', t_transaksi.jumlah, (t_barang.harga*t_transaksi.jumlah) AS 'Total Harga' FROM t_transaksi JOIN t_barang ON t_transaksi.kode_barang=t_barang.kode_barang WHERE id_pembayaran = ".$datamasuk['id_pembayaran'];
+                                $query = mysqli_query($conn,$sql);
+
+                             ?>
+
+                             <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                    <th class="col-md-1">No</th>
+                                    <th class="col-md-2">Nama</th>
+                                    <th class="col-md-2">Harga</th>
+                                    <th class="col-md-2">Jumlah</th>
+                                    <th class="col-md-2">Total Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $no = 0;
+                                    while ($data = mysqli_fetch_array($query)) {
+                                        $no = $no + 1;
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $no; ?></td>
+                                            <td><?php echo $data['nama']; ?></td>
+                                            <td><?php echo $data['harga']; ?></td>
+                                            <td><?php echo $data['jumlah']; ?></td>
+                                            <td><?php echo $data['Total Harga']; ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                </tbody>
+                             </table>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
                 </div>
             </div>
+                        </td>
+                    </tr>
+                
+            
+            <?php
+                }
+                ?>
+            </table>
         </div>
     </div>
 </div>
 </div>
 </div>
-
-
 
 <?php
 include '../includes/footer.php';
