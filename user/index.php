@@ -57,7 +57,7 @@ include '../includes/config.php';
         <div class="col-6 col-md-3">
             <form class="d-flex justify-end" action="" method="GET">
                 <input class="form-control me-2" type="text" name="dicari" placeholder="Masukkan kata kunci..." aria-label="Search" value="<?php echo isset($_GET["dicari"]) ? $_GET["dicari"] : ""; ?>">
-                <input type="button" class="btn btn-dark" type="submit" value="Cari">
+                <input  class="btn btn-dark" type="submit" value="Cari">
             </form>
         </div>
     </div>
