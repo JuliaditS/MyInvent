@@ -1,7 +1,8 @@
 <?php
 include '../includes/header.php';
 include '../includes/config.php';
-
+if (!isset($_SESSION["id_user"]))
+    header("Location: ../index.php?error=2");
 $pesan = ""; //diguanakan sebagai pesan eror validasi 
 if (isset($_POST['submit'])) {
     $nama = htmlspecialchars($_POST['nama']);

@@ -1,7 +1,8 @@
 <?php
 include '../includes/header.php';
 include '../includes/config.php';
-
+if (!isset($_SESSION["id_user"]))
+    header("Location: ../index.php?error=2");
 $pesan = ""; //diguanakan sebagai pesan eror validasi 
 $id_user = $_GET["id_user"]; //mengambil id_user
 $ambil = mysqli_query($conn, "SELECT * FROM t_user WHERE id_user = $id_user");

@@ -2,7 +2,8 @@
 include 'includes/config.php';
 include 'includes/header.php';
 include 'includes/navbar.php';
-
+if (!isset($_SESSION["id_user"]))
+    header("Location: index.php?error=2");
 $query = mysqli_query($conn, "SELECT COUNT(IF (tipe='masuk',id_pembayaran,NULL)) AS 'Barang Masuk', COUNT(IF (tipe='keluar',id_pembayaran,NULL)) AS 'Barang Keluar',(SUM(IF (tipe='keluar',total_harga,0))) AS pendapatan, (SUM(IF (tipe='keluar',total_harga,0))-SUM(IF (tipe='masuk',total_harga,0))) AS Keuntungan FROM `t_pembayaran` ");
 $data = mysqli_fetch_array($query);
 ?>
