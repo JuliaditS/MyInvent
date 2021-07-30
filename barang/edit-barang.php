@@ -14,20 +14,12 @@ $data = mysqli_fetch_array($ambil);
 if (isset($_POST['submit'])) {
     $kode_barang = htmlspecialchars($_POST['kode_barang']);
     $nama = htmlspecialchars($_POST['nama']);
-    $stok = htmlspecialchars($_POST['stok']);
     $harga = htmlspecialchars($_POST['harga']);
 
     //validasi jika nama kosong
     if (empty($nama)) {
         $pesan = "<div class='alert alert-danger' role='alert'>
                           Nama barang tidak boleh kosong!
-                        </div>";
-    }
-
-    //validasi jika stok kosong
-    elseif (empty($stok)) {
-        $pesan = "<div class='alert alert-danger' role='alert'>
-                          Jumlah stok tidak boleh kosong!
                         </div>";
     }
 
@@ -40,7 +32,6 @@ if (isset($_POST['submit'])) {
         $harga = str_replace(".","",$harga);
         $query = "UPDATE t_barang SET 
                     nama = '$nama',
-                    stok = '$stok',
                     harga = '$harga'
                     WHERE kode_barang = '$kode_barang'";
         $update = mysqli_query($conn, $query); //mengubah data di tabel t_barang berdasarkan kode barang yang didapatkan
@@ -82,14 +73,6 @@ if (isset($_POST['submit'])) {
                                 </div>
                                 <div class="col-md-6">
                                     <input type="text" name="nama" value="<?= $data['nama']; ?>" class="form-control"></input>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center mb-3">
-                                <div class="col-md-3">
-                                    <label class="col-form-label">Jumlah</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="number" name="stok" value="<?= $data['stok']; ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center mb-3">

@@ -1,6 +1,6 @@
 <?php
 include '../includes/header.php';
-session_start();
+include '../includes/config.php';
 if (!isset($_SESSION["id_user"]))
     header("Location: ../index.php?error=2");
 ?>
@@ -56,26 +56,10 @@ if (!isset($_SESSION["id_user"]))
                         <form action="" class="form-inline justify-content-center">
                             <div class="row g-3 align-items-center mb-3">
                                 <div class="col-md-3">
-                                    <label class="col-form-label">Nama Barang</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control"></input>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center mb-3">
-                                <div class="col-md-3">
-                                    <label class="col-form-label">Jumlah</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center mb-3">
-                                <div class="col-md-3">
                                     <label class="col-form-label">Total Harga</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control format-angka" readonly=""></input>
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center mb-3">
@@ -83,7 +67,7 @@ if (!isset($_SESSION["id_user"]))
                                     <label class="col-form-label">Uang Pembayaran</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control format-angka">
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center mb-3">
@@ -91,18 +75,10 @@ if (!isset($_SESSION["id_user"]))
                                     <label class="col-form-label">Uang Kembalian</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control format-angka" readonly="">
                                 </div>
                             </div>
-
-                            <div class="row g-3 align-items-center mb-3">
-                                <div class="col-md-3">
-                                    <label class="col-form-label">Tanggal</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="date" class="form-control">
-                                </div>
-                            </div>
+                            
                             <div class="row g-3 align-items-center mb-3">
                                 <div class="col-md-3">
                                     <label class="col-form-label"></label>
@@ -113,67 +89,44 @@ if (!isset($_SESSION["id_user"]))
                 <div class="col-md-6">
                     <table class="table table-striped table-hover table-bordered">
                         <tr>
-                            <th class="col-md-2">Nama Menu</th>
-                            <th class="col-md-2">Jenis</th>
+                            <th class="col-md-2">Nama</th>
                             <th class="col-md-2">Harga</th>
-                            <th class="col-md-1">Jumlah</th>
+                            <th class="col-md-1">Stok</th>
+                            <th class="col-md-2">Jumlah</th>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Bandrek Telur
-                                    </label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                    <label class="form-check-label" for="exampleRadios1">
-                                        Panas
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                    <label class="form-check-label" for="exampleRadios2">
-                                        Dingin
-                                    </label>
-                                </div>
-                            </td>
-                            <td>
-                                Rp. 25.000
-                            </td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Bandrek Telur Susu
-                                    </label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                    <label class="form-check-label" for="exampleRadios1">
-                                        Panas
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                    <label class="form-check-label" for="exampleRadios2">
-                                        Dingin
-                                    </label>
-                                </div>
-                            </td>
-                            <td>
-                                Rp. 25.000
-                            </td>
-                            <td>2</td>
-                        </tr>
+                        <?php 
+                            $db = dbConnect();
+                            $sql="SELECT * FROM t_barang";
+                            $res=$db->query($sql);
+                            $data = $res->fetch_all(MYSQLI_ASSOC);
+                            $res->free();
+                            foreach ($data as $barisdata) {
+                                ?>
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="<?php echo $barisdata['kode_barang']; ?>" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                <?php echo $barisdata['nama']; ?>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <?php echo $barisdata['harga']; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $barisdata['stok']; ?>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="jumlah">
+                                    </td>
+                                </tr>
+
+                                <?php
+                            }
+                         ?>
+                        
+                        
                     </table>
                 </div>
                 </form>

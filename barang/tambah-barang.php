@@ -19,7 +19,6 @@ if (isset($_POST['submit'])) {
     $kode_barang = htmlspecialchars($_POST['kode_barang']);
     $nama = htmlspecialchars($_POST['nama']);
     $harga = htmlspecialchars($_POST['harga']);
-    $stok = htmlspecialchars($_POST['stok']);
     $cekNama = mysqli_query($conn, "SELECT nama FROM t_barang WHERE nama = '$nama'");
 
     //validasi jika nama barang kosong
@@ -34,17 +33,10 @@ if (isset($_POST['submit'])) {
         $pesan = "<div class='alert alert-danger' role='alert'>
                           Harga wajib diisi!
                         </div>";
-    }
-
-    //validasi jika stok kosong
-    elseif (empty($stok)) {
-        $pesan = "<div class='alert alert-danger' role='alert'>
-                          Jumlah stok wajib diisi!
-                        </div>";
     } else {
         $harga = str_replace(".","",$harga);
         //memasukan data ke tabel t_barang
-        $masuk = mysqli_query($conn, "INSERT INTO t_barang VALUES('$kode_barang','$nama','$harga','$stok')");
+        $masuk = mysqli_query($conn, "INSERT INTO t_barang VALUES('$kode_barang','$nama','$harga','0')");
 
         if ($masuk) {
             $pesan = "<div class='alert alert-success' role='alert'>
@@ -83,14 +75,6 @@ if (isset($_POST['submit'])) {
                                 </div>
                                 <div class="col-md-6">
                                     <input type="text" name="nama" class="form-control"></input>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center mb-3">
-                                <div class="col-md-3">
-                                    <label class="col-form-label">Jumlah</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="number" min="1" name="stok" class="form-control">
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center mb-3">
