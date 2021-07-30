@@ -3,6 +3,9 @@ include '../includes/header.php';
 include 'navbar-barang.php';
 include '../includes/config.php';
 
+if (!isset($_SESSION["id_user"]))
+    header("Location: ../index.php?error=2");
+
 $pesan = ""; //diguanakan sebagai pesan eror validasi 
 $kode_barang = $_GET['kode_barang']; //mengambil id_user
 $ambil = mysqli_query($conn, "SELECT * FROM t_barang WHERE kode_barang = '$kode_barang'");

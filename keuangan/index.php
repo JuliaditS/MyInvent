@@ -2,6 +2,9 @@
 include '../includes/config.php';
 include '../includes/header.php';
 include 'navbar-keuangan.php';
+if (!isset($_SESSION["id_user"]))
+    header("Location: ../index.php?error=2");
+
 if(isset($_POST['cari'])){
     $cari = $_POST['cari'];
     $pendapat = mysqli_query($conn, "SELECT tanggal,COUNT(IF (tipe='masuk',id_pembayaran,NULL)) AS 'transaksi Masuk', COUNT(IF (tipe='keluar',id_pembayaran,NULL)) AS 'transaksi Keluar', (SUM(IF (tipe='keluar',total_harga,0))-SUM(IF (tipe='masuk',total_harga,0))) AS Pendapatan FROM `t_pembayaran` where tanggal like '%$cari%' GROUP BY tanggal");

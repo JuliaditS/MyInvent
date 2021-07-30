@@ -1,6 +1,8 @@
 <?php
 include '../includes/header.php';
 include '../includes/navbar.php';
+if (!isset($_SESSION["id_user"]))
+    header("Location: ../index.php?error=2");
 ?>
 <section id="cover">
     <div id="cover-caption">

@@ -1,5 +1,7 @@
 <?php 
     include '../includes/config.php';
+    if (!isset($_SESSION["id_user"]))
+    header("Location: ../index.php?error=2");
 
     $kode_barang = $_GET["kode_barang"]; //megambil kode barang
     $hapus = mysqli_query($conn,"DELETE FROM t_barang WHERE kode_barang='$kode_barang'"); //menghapus data di t_user berdasarkan kode barang yang didapat

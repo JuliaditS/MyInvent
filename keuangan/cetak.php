@@ -1,6 +1,8 @@
 <?php
 include '../includes/config.php';
 require('../includes/pdf/fpdf.php');
+if (!isset($_SESSION["id_user"]))
+    header("Location: ../index.php?error=2");
 
 
 $query = "SELECT tanggal,COUNT(IF (tipe='masuk',id_pembayaran,NULL)) AS 'transaksi Masuk', COUNT(IF (tipe='keluar',id_pembayaran,NULL)) AS 'transaksi Keluar', (SUM(IF (tipe='keluar',total_harga,0))-SUM(IF (tipe='masuk',total_harga,0))) AS Pendapatan FROM `t_pembayaran` GROUP BY tanggal";

@@ -2,6 +2,8 @@
 include '../includes/header.php';
 include 'navbar-barang.php';
 include '../includes/config.php';
+if (!isset($_SESSION["id_user"]))
+    header("Location: ../index.php?error=2");
 
 //membuat kode otomatis
 $query = mysqli_query($conn, "SELECT MAX(kode_barang) as kode_terbesar FROM t_barang");

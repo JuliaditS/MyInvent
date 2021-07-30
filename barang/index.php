@@ -2,6 +2,8 @@
 include '../includes/header.php';
 include 'navbar-barang.php';
 include '../includes/config.php';
+if (!isset($_SESSION["id_user"]))
+    header("Location: ../index.php?error=2");
 
 
 ?>

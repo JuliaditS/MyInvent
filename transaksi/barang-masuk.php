@@ -1,6 +1,7 @@
 <?php
 include '../includes/config.php';
-
+if (!isset($_SESSION["id_user"]))
+    header("Location: ../index.php?error=2");
 $querymasuk = mysqli_query($conn, "SELECT id_pembayaran,`tanggal`,total_harga  FROM `t_pembayaran` WHERE tipe = 'masuk' ORDER BY tanggal desc");
 
 

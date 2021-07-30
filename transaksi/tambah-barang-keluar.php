@@ -1,5 +1,7 @@
 <?php
 include '../includes/header.php';
+if (!isset($_SESSION["id_user"]))
+    header("Location: ../index.php?error=2");
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
