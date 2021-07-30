@@ -1,8 +1,6 @@
 <?php
 include '../includes/config.php';
-$querykeluar = mysqli_query($conn, "SELECT `t_barang`.*, `t_transaksi`.*, `t_pembayaran`.*, `t_pembayaran`.`tipe` FROM `t_barang` LEFT JOIN `t_transaksi` ON `t_transaksi`.`kode_barang` = `t_barang`.`kode_barang` LEFT JOIN `t_pembayaran` ON `t_transaksi`.`id_pembayaran` = `t_pembayaran`.`id_pembayaran` WHERE `t_pembayaran`.`tipe` = 'keluar'");
-
-$querymasuk = mysqli_query($conn, "SELECT `t_barang`.*, `t_transaksi`.*, `t_pembayaran`.*, `t_pembayaran`.`tipe` FROM `t_barang` LEFT JOIN `t_transaksi` ON `t_transaksi`.`kode_barang` = `t_barang`.`kode_barang` LEFT JOIN `t_pembayaran` ON `t_transaksi`.`id_pembayaran` = `t_pembayaran`.`id_pembayaran` WHERE `t_pembayaran`.`tipe` = 'keluar'");
+$querykeluar = mysqli_query($conn, "SELECT id_pembayaran,`tanggal`,total_harga  FROM `t_pembayaran` WHERE tipe = 'keluar' ORDER BY tanggal desc");
 
 
 
@@ -74,23 +72,21 @@ include '../includes/header.php';
             <table class="table table-striped table-hover">
                 <tr>
                     <th class="col-md-1">No</th>
-                    <th class="col-md-2">Nama Barang</th>
-                    <th class="col-md-2">Jumlah</th>
+                    <th class="col-md-2">Id Pembayaran</th>
+                    <th class="col-md-2">tanggal</th>
                     <th class="col-md-2">Total Harga</th>
-                    <th class="col-md-1">Tanggal</th>
+                    <th class="col-md-1">Aksi</th>
                 </tr>
                 <?php
                 $no2 = 0;
                 while ($datakeluar = mysqli_fetch_array($querykeluar)) {
                     $no2 = $no2 + 1;
-                    $totalharga2 = $datakeluar['jumlah'] * $datakeluar['harga'];
                 ?>
                     <tr>
                         <td><?php echo $no2; ?></td>
-                        <td><?php echo $datakeluar['nama']; ?></td>
-                        <td><?php echo $datakeluar['jumlah']; ?></td>
-                        <td>Rp. <?php echo $totalharga2; ?></td>
+                        <td><?php echo $datakeluar['id_pembayaran']; ?></td>
                         <td><?php echo $datakeluar['tanggal']; ?></td>
+                        <td><?php echo $datakeluar['total_harga']; ?></td>
                     </tr>
                 <?php
                 }
