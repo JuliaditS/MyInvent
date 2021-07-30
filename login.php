@@ -1,6 +1,9 @@
 <?php
 include 'includes/config.php';
 include 'includes/header-login.php';
+if (isset($_SESSION["id_user"])) {
+    header("location: dashboard.php");
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn === false) {
         header("Location: ?page=&&error=1");
@@ -35,10 +38,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-md-4 offset-md-4">
             <div class="login-form mt-4 p-4">
                 <!-- alert gagal login -->
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <strong>Username atau password salah
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <?php 
+                if (isset($_GET['error'])) {
+                    if ($_GET['error']==1) {
+                    ?>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Database tidak terhubung 
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php
+                    } elseif ($_GET['error']==3){
+                    ?>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Username salah
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php
+                    } elseif ($_GET['error']==4){
+                    ?>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Password salah
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php
+                    }
+                }
+                ?>
+                
                 <form action="login.php" method="POST" class="row g-3">
                     <h5 class="title text-center header__login">Log in</h5>
                     <div class="input-field">
