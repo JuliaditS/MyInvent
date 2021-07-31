@@ -3,6 +3,31 @@ include '../includes/header.php';
 include '../includes/config.php';
 if (!isset($_SESSION["id_user"]))
     header("Location: ../index.php?error=2");
+if (isset($_POST['submit'])) {
+    //getarray
+    $kdbrg = $_POST['kode_barang'];
+    $jumlah= $_POST['jumlah'];
+    $total = $_POST['total'];
+    $bayar = $_POST['bayar'];
+    $kemb  = $_POST['kembalian'];
+    $iduser= $_SESSION['id_user'];
+    $date  = date("Y-m-d");
+    mysqli_query($conn, "INSERT INTO `t_pembayaran` (`id_pembayaran`, `total_harga`, `uang_pembayaran`, `uang_kembalian`, `tanggal`, `tipe`, `id_user`) VALUES (NULL, '$total', '$bayar', '$kemb', '$date', 'keluar', '$iduser')");
+    
+    
+    $no = -1;
+    foreach($kdbrg as $vkdbrg){
+        $no = $no + 1;
+        $jumlahs = $jumlah[$no];
+        $id_pem = mysqli_num_rows(mysqli_query($conn, "Select * from t_pembayaran"));
+        mysqli_query($conn, "INSERT INTO `t_transaksi` (`id_pembayaran`, `kode_barang`, `jumlah`) VALUES ($id_pem, '$vkdbrg', '$jumlahs')");
+        mysqli_error($conn);
+        $tmpbarang = mysqli_fetch_array(mysqli_query($conn, "select * from t_barang where kode_barang='$vkdbrg'"));
+        $tmpstok = + $tmpbarang['stok'] - $jumlah[$no];
+        mysqli_query($conn,"UPDATE `t_barang` SET `stok` = '$tmpstok' WHERE `t_barang`.`kode_barang` = '$vkdbrg'");  
+    }
+
+}
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
@@ -49,17 +74,17 @@ if (!isset($_SESSION["id_user"]))
 <section id="cover">
     <div id="cover-caption">
         <div id="container" class="container mt-3">
-            <h5 class="mb-3">Tambah Transaksi Barang Keluar</h5>
+            <h5 class="mb-3">Tambah Transaksi Barang Masuk</h5>
             <div class="row">
                 <div class="col-md-6">
                     <div class="info-form">
-                        <form action="" class="form-inline justify-content-center">
+                        <form action="" method="POST" class="form-inline justify-content-center">
                             <div class="row g-3 align-items-center mb-3">
                                 <div class="col-md-3">
                                     <label class="col-form-label">Total Harga</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" id="totalharga" class="form-control format-angka" readonly=""></input>
+                                    <input type="text" id="totalharga" name="total" class="form-control format-angka" readonly=""></input>
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center mb-3">
@@ -67,7 +92,7 @@ if (!isset($_SESSION["id_user"]))
                                     <label class="col-form-label">Uang Pembayaran</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control format-angka" id="uangbayar" onkeyup="pembayaran(this)">
+                                    <input type="text" required class="form-control" id="uangbayar" name="bayar" onkeyup="pembayaran(this)">
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center mb-3">
@@ -75,7 +100,7 @@ if (!isset($_SESSION["id_user"]))
                                     <label class="col-form-label">Uang Kembalian</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control format-angka" id="uangkembali" readonly="">
+                                    <input type="text" class="form-control format-angka" name="kembalian" id="uangkembali" readonly="">
                                 </div>
                             </div>
                             
@@ -96,7 +121,7 @@ if (!isset($_SESSION["id_user"]))
                         </tr>
                         <?php 
                             $db = dbConnect();
-                            $sql="SELECT * FROM t_barang WHERE Stok != 0";
+                            $sql="SELECT * FROM t_barang where stok != 0";
                             $res=$db->query($sql);
                             $data = $res->fetch_all(MYSQLI_ASSOC);
                             $res->free();
@@ -117,8 +142,8 @@ if (!isset($_SESSION["id_user"]))
                                     <td>
                                         <?php echo $barisdata['stok']; ?><input type="hidden" id="stok<?php echo $barisdata['kode_barang']; ?>" value="<?php echo $barisdata['stok']; ?>">
                                     </td>
-                                    <td>
-                                        <input type="number" min="1" max="<?php echo $barisdata['stok']; ?>" id="jumlah<?php echo $barisdata['kode_barang']; ?>" class="form-control" name="jumlah[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="nambahangka(this)" onkeyup="nambahangka(this)" disabled>
+                                    <td> <?php $lenght = strlen($barisdata['stok']); ?>
+                                        <input type="number" min="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" max="<?php echo $barisdata['stok']; ?>" maxlength="<?php echo $lenght;?>" id="jumlah<?php echo $barisdata['kode_barang']; ?>" class="form-control" name="jumlah[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="nambahangka(this)" onkeyup="nambahangka(this)" disabled>
                                     </td>
                                 </tr>
 
@@ -129,10 +154,10 @@ if (!isset($_SESSION["id_user"]))
                         
                     </table>
                 </div>
-                </form>
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-dark ">Simpan</button>
+                    <button type="submit" class="btn btn-dark " name="submit">Simpan</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -190,7 +215,7 @@ if (!isset($_SESSION["id_user"]))
         document.getElementById("jumlah"+test.value).value = "";
         document.getElementById("jumlah"+test.value).disabled = true;
       }
-    }  
+    } 
 </script>
 <?php
 include '../includes/footer.php';
