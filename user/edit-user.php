@@ -155,12 +155,7 @@ if (isset($_POST['submit'])) {
                                 </div>
                             </div>
                             
-                            <div class="row g-3 align-items-center mb-3">
-                                <div class="col-md-3"></div>
-                                <div class="col-md-6">
-                                    <p class="form-text text-muted">*Jika anda tidak melakukan perubahan pada password, maka kosongkan isi pada form input tersebut</p>
-                                </div>
-                            </div>
+                           
 
 
 
