@@ -33,11 +33,23 @@ if (isset($_POST['submit'])) {
                         </div>";
     }
 
+    elseif(!preg_match("/^[a-zA-Z0-9]*$/", $username)){
+        $pesan = "<div class='alert alert-danger' role='alert'>
+                        Username hanya boleh huruf dan angka!
+                    </div>";
+    }
+
     //validasi jika password kosong
     elseif (empty($password)) {
         $pesan = "<div class='alert alert-danger' role='alert'>
                           Password wajib diisi
                         </div>";
+    }
+
+    elseif(!preg_match("/^[a-zA-Z0-9]*$/", $password)){
+        $pesan = "<div class='alert alert-danger' role='alert'>
+                        Password hanya boleh huruf dan angka!
+                    </div>";
     }
 
     //validasi jika password kurang dari 8 karakter
@@ -139,9 +151,17 @@ if (isset($_POST['submit'])) {
                                     <label class="col-form-label">Password</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="password" placeholder="Silahkan masukkan password baru..." class="form-control">
+                                    <input type="password" name="password" placeholder="Masukkan password baru..." class="form-control">
                                 </div>
                             </div>
+                            
+                            <div class="row g-3 align-items-center mb-3">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <p class="form-text text-muted">*Jika anda tidak melakukan perubahan pada password, maka kosongkan isi pada form input tersebut</p>
+                                </div>
+                            </div>
+
 
 
                             <div class="row g-3 align-items-center mb-3">

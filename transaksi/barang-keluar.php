@@ -2,7 +2,7 @@
 include '../includes/config.php';
 if (!isset($_SESSION["id_user"]))
     header("Location: ../index.php?error=2");
-$querykeluar = mysqli_query($conn, "SELECT id_pembayaran,`tanggal`,total_harga  FROM `t_pembayaran` WHERE tipe = 'keluar' ORDER BY tanggal desc");
+$querykeluar = mysqli_query($conn, "SELECT id_pembayaran,`tanggal`,total_harga,uang_pembayaran,uang_kembalian  FROM `t_pembayaran` WHERE tipe = 'keluar' ORDER BY tanggal desc");
 
 
 
@@ -76,6 +76,8 @@ include '../includes/header.php';
                     <th class="col-md-1">No</th>
                     <th class="col-md-2">Id Pembayaran</th>
                     <th class="col-md-2">tanggal</th>
+                    <th class="col-md-2">Uang Pembayaran</th>
+                    <th class="col-md-2">Uang Kembalian</th>
                     <th class="col-md-2">Total Harga</th>
                     <th class="col-md-1">Aksi</th>
                 </tr>
@@ -88,7 +90,9 @@ include '../includes/header.php';
                         <td><?php echo $no2; ?></td>
                         <td><?php echo $datakeluar['id_pembayaran']; ?></td>
                         <td><?php echo $datakeluar['tanggal']; ?></td>
-                        <td><?php echo $datakeluar['total_harga']; ?></td>
+                        <td><?php echo rupiah($datakeluar['uang_pembayaran']); ?></td>
+                        <td><?php echo rupiah($datakeluar['uang_kembalian']); ?></td>
+                        <td><?php echo rupiah($datakeluar['total_harga']); ?></td>
                         <td>
                             <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#detail<?php echo $datakeluar['id_pembayaran']; ?>">
                                 Detail
@@ -121,7 +125,7 @@ include '../includes/header.php';
                                                     <?php
                                                     $nos = 0;
                                                     while ($data = mysqli_fetch_array($query)) {
-                                                        $nos = $no + 1;
+                                                        $nos = $nos+ 1;
                                                     ?>
                                                         <tr>
                                                             <td><?php echo $nos; ?></td>

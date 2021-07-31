@@ -3,6 +3,8 @@ include '../includes/header.php';
 include '../includes/config.php';
 if (!isset($_SESSION["id_user"]))
     header("Location: ../index.php?error=2");
+
+$pesan = "";
 if (isset($_POST['submit'])) {
     //getarray
     $kdbrg = $_POST['kode_barang'];
@@ -26,6 +28,11 @@ if (isset($_POST['submit'])) {
         $tmpstok = +$tmpbarang['stok'] - $jumlah[$no];
         mysqli_query($conn, "UPDATE `t_barang` SET `stok` = '$tmpstok' WHERE `t_barang`.`kode_barang` = '$vkdbrg'");
     }
+    $pesan = "<div class='alert alert-success' role='alert'>
+                          Tambah transaksi barang keluar berhasil!
+                        </div>";
+    header("Refresh: 2; url=barang-keluar.php");
+
 }
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -102,6 +109,7 @@ if (isset($_POST['submit'])) {
                                     <input type="text" class="form-control format-angka" name="kembalian" id="uangkembali" readonly="">
                                 </div>
                             </div>
+                            <?= $pesan; ?>
 
                             <div class="row g-3 align-items-center mb-3">
                                 <div class="col-md-3">

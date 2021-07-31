@@ -102,7 +102,7 @@ if (!isset($_SESSION["id_user"]))
                 <td><?= htmlspecialchars($data['username']); ?></td>
                 <td>
                     <a href="edit-user.php?id_user=<?php echo $data["id_user"]; ?>" class="btn btn-warning"><i class='bx bx-edit'></i></a>
-                    <a href="hapus-user.php?id_user=<?php echo $data["id_user"]; ?>" onclick="return confirm('Yakin?')" class="btn btn-danger"><i class='bx bx-trash'></i></a>
+                    <a href="hapus-user.php?id_user=<?php echo $data["id_user"]; ?>" onclick="return confirm('Apakah anda yakin ingin menghapus user ini?')" class="btn btn-danger"><i class='bx bx-trash'></i></a>
                 </td>
             </tr>
         <?php $i++;

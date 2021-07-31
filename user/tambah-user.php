@@ -7,6 +7,8 @@ $pesan = ""; //diguanakan sebagai pesan eror validasi
 if (isset($_POST['submit'])) {
     $nama = htmlspecialchars($_POST['nama']);
     $username = htmlspecialchars($_POST['username']);
+    // var_dump($username);
+    // die();
     $password = htmlspecialchars($_POST['password']);
     $cekUser = mysqli_query($conn, "SELECT username FROM t_user WHERE username = '$username'");
 
@@ -28,11 +30,23 @@ if (isset($_POST['submit'])) {
                         </div>";
     }
 
+    elseif(!preg_match("/^[a-zA-Z0-9]*$/", $username)){
+        $pesan = "<div class='alert alert-danger' role='alert'>
+                        Username hanya boleh huruf dan angka!
+                    </div>";
+    }
+
     //validasi jika password kosong
     elseif (empty($password)) {
         $pesan = "<div class='alert alert-danger' role='alert'>
                           Password wajib diisi
                         </div>";
+    }
+
+    elseif(!preg_match("/^[a-zA-Z0-9]*$/", $password)){
+        $pesan = "<div class='alert alert-danger' role='alert'>
+                        Password hanya boleh huruf dan angka!
+                    </div>";
     }
 
     //validasi jika password kurang dari 8 karakter

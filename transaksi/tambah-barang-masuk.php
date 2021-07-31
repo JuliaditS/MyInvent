@@ -3,6 +3,8 @@ include '../includes/header.php';
 include '../includes/config.php';
 if (!isset($_SESSION["id_user"]))
     header("Location: ../index.php?error=2");
+
+$pesan = "";
 if (isset($_POST['submit'])) {
     //getarray
     $kdbrg = $_POST['kode_barang'];
@@ -13,6 +15,7 @@ if (isset($_POST['submit'])) {
     $iduser = $_SESSION['id_user'];
     $date  = date("Y-m-d");
     mysqli_query($conn, "INSERT INTO `t_pembayaran` (`id_pembayaran`, `total_harga`, `uang_pembayaran`, `uang_kembalian`, `tanggal`, `tipe`, `id_user`) VALUES (NULL, '$total', '$bayar', '$kemb', '$date', 'masuk', '$iduser')");
+
 
 
     $no = -1;
@@ -26,7 +29,13 @@ if (isset($_POST['submit'])) {
         $tmpstok = $jumlah[$no] + $tmpbarang['stok'];
         mysqli_query($conn, "UPDATE `t_barang` SET `stok` = '$tmpstok' WHERE `t_barang`.`kode_barang` = '$vkdbrg'");
     }
+    $pesan = "<div class='alert alert-success' role='alert'>
+                          Tambah transaksi barang masuk berhasil!
+                        </div>";
+    header("Refresh: 2; url=barang-masuk.php");
 }
+
+
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
@@ -102,6 +111,7 @@ if (isset($_POST['submit'])) {
                                     <input type="text" class="form-control format-angka" name="kembalian" id="uangkembali" readonly="">
                                 </div>
                             </div>
+                            <?= $pesan; ?>
 
                             <div class="row g-3 align-items-center mb-3">
                                 <div class="col-md-3">

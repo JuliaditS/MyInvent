@@ -59,12 +59,12 @@ if (!isset($_SESSION["id_user"]))
         foreach ($databaris as $data) { ?>
             <tr>
                 <td><?= $i; ?></td>
-                <td><?= $data['nama']; ?></td>
-                <td><?= $data['stok']; ?></td>
-                <td><?= rupiah($data['harga']); ?></td>
+                <td><?= htmlspecialchars($data['nama']); ?></td>
+                <td><?= htmlspecialchars($data['stok']); ?></td>
+                <td><?= rupiah(htmlspecialchars($data['harga'])); ?></td>
                 <td>
                     <a href="edit-barang.php?kode_barang=<?php echo $data["kode_barang"]; ?>" class="btn btn-warning"><i class='bx bx-edit'></i></a>
-                    <a href="hapus-barang.php?kode_barang=<?php echo $data["kode_barang"]; ?>" onclick="return confirm('Yakin?')" class="btn btn-danger"><i class='bx bx-trash'></i></a>
+                    <a href="hapus-barang.php?kode_barang=<?php echo $data["kode_barang"]; ?>" onclick="return confirm('Apakah anda yakin ingin menghapus barang ini?')" class="btn btn-danger"><i class='bx bx-trash'></i></a>
                 </td>
             </tr>
         <?php $i++;
