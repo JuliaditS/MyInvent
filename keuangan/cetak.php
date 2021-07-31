@@ -60,8 +60,8 @@ foreach ($sql as $row) {
 	$pdf->Cell($width_cell[0],10,$i,1,0,'C',$fill);
 	$pdf->Cell($width_cell[1],10,$row['tanggal'],1,0,'C',$fill);
 	$pdf->Cell($width_cell[2],10,$row['transaksi Masuk'],1,0,'L',$fill);
-	$pdf->Cell($width_cell[3],10,$row['transaksi Masuk'],1,0,'L',$fill);
-	$pdf->Cell($width_cell[4],10,'Rp. '.$row['Pendapatan'],1,0,'L',$fill);
+	$pdf->Cell($width_cell[3],10,$row['transaksi Keluar'],1,0,'L',$fill);
+	$pdf->Cell($width_cell[4],10,rupiah($row['Pendapatan']),1,0,'L',$fill);
 
 	//to give alternate background fill  color to rows//
 	$i++;
