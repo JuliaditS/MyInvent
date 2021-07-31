@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
         $pesan = "<div class='alert alert-danger' role='alert'>
                           Nama tidak boleh kosong!
                         </div>";
-    } elseif (!preg_match("/^[a-zA-Z ]*$/", $nama)) {
+    } elseif (!preg_match("/^[a-zA-Z ]+$/", $nama)) {
         $pesan = "<div class='alert alert-danger' role='alert'>
                           Nama hanya boleh berupa huruf!
                         </div>";
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
                         </div>";
     }
 
-    elseif(!preg_match("/^[a-zA-Z0-9]*$/", $username)){
+    elseif(!preg_match("/^[a-zA-Z0-9]+$/", $username)){
         $pesan = "<div class='alert alert-danger' role='alert'>
                         Username hanya boleh huruf dan angka!
                     </div>";
@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
                         </div>";
     }
 
-    elseif(!preg_match("/^[a-zA-Z0-9]*$/", $password)){
+    elseif(!preg_match("/^[a-zA-Z0-9]+$/", $password)){
         $pesan = "<div class='alert alert-danger' role='alert'>
                         Password hanya boleh huruf dan angka!
                     </div>";

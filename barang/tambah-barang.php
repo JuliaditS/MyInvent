@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
                         </div>";
     }
 
-    elseif(!preg_match("/^[a-zA-Z0-9]*$/", $nama)){
+    elseif(!preg_match("/^[a-zA-Z\s]+$/", $nama)){
         $pesan = "<div class='alert alert-danger' role='alert'>
                         Nama barang hanya boleh huruf dan angka!
                     </div>";
