@@ -119,12 +119,12 @@ include '../includes/header.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $no = 0;
+                                    $nos = 0;
                                     while ($data = mysqli_fetch_array($query)) {
-                                        $no = $no + 1;
+                                        $nos = $no + 1;
                                     ?>
                                         <tr>
-                                            <td><?php echo $no; ?></td>
+                                            <td><?php echo $nos; ?></td>
                                             <td><?php echo $data['nama']; ?></td>
                                             <td><?php echo $data['harga']; ?></td>
                                             <td><?php echo $data['jumlah']; ?></td>
