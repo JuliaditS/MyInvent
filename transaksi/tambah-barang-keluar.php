@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
 <section id="cover">
     <div id="cover-caption">
         <div id="container" class="container mt-3">
-            <h5 class="mb-3">Tambah Transaksi Barang Masuk</h5>
+            <h5 class="mb-3">Tambah Transaksi Barang Keluar</h5>
             <div class="row">
                 <div class="col-md-6">
                     <div class="info-form">
