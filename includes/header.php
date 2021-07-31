@@ -16,7 +16,7 @@
     <!-- boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 
-    <title>Hello, world!</title>
+    <title>MyInvent - Sistem Informasi Toko Abang Adek</title>
 </head>
 
 <body>

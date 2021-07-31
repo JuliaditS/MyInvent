@@ -10,19 +10,19 @@ $data = mysqli_fetch_array($query);
 <div class="container mt-1">
     <div class="row justify-content-between text-white text-center mt-4">
         <div class="col-md-2 bg-primary box__dashboard">
-            <i class='bx bx-arrow-from-top box__dashboard'></i> Barang Masuk <h2><?php echo $data['Barang Masuk'];?></h2>
+            <i class='bx bx-arrow-from-top box__dashboard'></i> Barang Masuk <h2><?php echo $data['Barang Masuk']; ?></h2>
         </div>
         <div class="col-md-2 bg-info box__dashboard mt-1">
-            <i class='bx bx-arrow-from-bottom'></i> Barang Keluar <h2><?php echo $data['Barang Keluar'];?></h2>
+            <i class='bx bx-arrow-from-bottom'></i> Barang Keluar <h2><?php echo $data['Barang Keluar']; ?></h2>
         </div>
         <div class="col-md-2 bg-warning box__dashboard mt-1">
-            <i class='bx bx-arrow-from-bottom'></i> Jumlah Transaksi <h2><?php echo $data['Barang Keluar'] + $data['Barang Masuk'];?></h2>
+            <i class='bx bx-transfer'></i> Jumlah Transaksi <h2><?php echo $data['Barang Keluar'] + $data['Barang Masuk']; ?></h2>
         </div>
         <div class="col-md-2 bg-dark box__dashboard mt-1">
-            <i class='bx bx-arrow-from-bottom'></i> Pendapatan <h2><?php echo $data['pendapatan'];?></h2>
+            <i class='bx bx-money'></i> Pendapatan <h2><?php echo $data['pendapatan']; ?></h2>
         </div>
         <div class="col-md-2 bg-danger box__dashboard mt-1">
-            <i class='bx bx-arrow-from-bottom'></i> Keuntungan <h2><?php echo $data['Keuntungan'];?></h2>
+            <i class='bx bx-plus-circle'></i> Keuntungan <h2><?php echo $data['Keuntungan']; ?></h2>
         </div>
     </div>
 

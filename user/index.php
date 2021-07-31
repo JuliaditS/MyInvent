@@ -7,7 +7,7 @@ if (!isset($_SESSION["id_user"]))
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">MyInvent</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -59,7 +59,7 @@ if (!isset($_SESSION["id_user"]))
         <div class="col-6 col-md-3">
             <form class="d-flex justify-end" action="" method="GET">
                 <input class="form-control me-2" type="text" name="dicari" placeholder="Masukkan kata kunci..." aria-label="Search" value="<?php echo isset($_GET["dicari"]) ? $_GET["dicari"] : ""; ?>">
-                <input  class="btn btn-dark" type="submit" value="Cari">
+                <input class="btn btn-dark" type="submit" value="Cari">
             </form>
         </div>
     </div>
