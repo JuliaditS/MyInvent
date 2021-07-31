@@ -13,12 +13,15 @@ if (isset($_POST['submit'])) {
     $iduser= $_SESSION['id_user'];
     $date  = date("Y-m-d");
     mysqli_query($conn, "INSERT INTO `t_pembayaran` (`id_pembayaran`, `total_harga`, `uang_pembayaran`, `uang_kembalian`, `tanggal`, `tipe`, `id_user`) VALUES (NULL, '$total', '$bayar', '$kemb', '$date', 'masuk', '$iduser')");
-    $id_pem = 1 + mysqli_num_rows(mysqli_query($conn, "Select * from t_pembayaran"));
+    
     
     $no = -1;
     foreach($kdbrg as $vkdbrg){
         $no = $no + 1;
-        mysqli_query($conn, "INSERT INTO `t_transaksi` (`id_pembayaran`, `kode_barang`, `jumlah`) VALUES ('$id_pem', '$vkdbrg', '$jumlah[$no]')");
+        $jumlahs = $jumlah[$no];
+        $id_pem = mysqli_num_rows(mysqli_query($conn, "Select * from t_pembayaran"));
+        mysqli_query($conn, "INSERT INTO `t_transaksi` (`id_pembayaran`, `kode_barang`, `jumlah`) VALUES ($id_pem, '$vkdbrg', '$jumlahs')");
+        mysqli_error($conn);
         $tmpbarang = mysqli_fetch_array(mysqli_query($conn, "select * from t_barang where kode_barang='$vkdbrg'"));
         $tmpstok =$jumlah[$no] + $tmpbarang['stok'];
         mysqli_query($conn,"UPDATE `t_barang` SET `stok` = '$tmpstok' WHERE `t_barang`.`kode_barang` = '$vkdbrg'");  
