@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
     $kemb  = $_POST['kembalian'];
     $iduser = $_SESSION['id_user'];
     $date  = date("Y-m-d");
-    mysqli_query($conn, "INSERT INTO `t_pembayaran` (`id_pembayaran`, `total_harga`, `uang_pembayaran`, `uang_kembalian`, `tanggal`, `tipe`, `id_user`) VALUES (NULL, '$total', '$bayar', '$kemb', '$date', 'keluar', '$iduser')");
+    mysqli_query($conn, "INSERT INTO `t_pembayaran` (`id_pembayaran`, `total_harga`, `uang_pembayaran`, `uang_kembalian`, `tanggal`, `tipe`, `id_user`) VALUES (NULL, '$total', '$bayar', '$kemb', NOW(), 'keluar', '$iduser')");
 
 
     $no = -1;

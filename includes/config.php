@@ -22,7 +22,22 @@ function dbConnect()
 	$db = new mysqli("localhost", "root", "", "siabangade"); // Sesuaikan dengan konfigurasi server anda.
 	return $db;
 }
-
+function getListTransaksi($halaman_awal=Null, $batas=Null, $cari=Null)
+{
+	$db = dbConnect();
+	if ($db->connect_errno == 0) {
+		$sql = "SELECT id_pembayaran,`tanggal`,total_harga,uang_pembayaran,uang_kembalian  FROM `t_pembayaran` WHERE tipe = '$cari' ORDER BY tanggal desc ".(($halaman_awal==Null&&$batas==Null) ? "" : "limit $halaman_awal, $batas");
+			  
+		$res = $db->query($sql);
+		if ($res) {
+			$data = $res->fetch_all(MYSQLI_ASSOC);
+			$res->free();
+			return $data;
+		} else
+			return FALSE;
+	} else
+		return FALSE;
+}
 function getListBarang($halaman_awal=Null, $batas=Null, $tipe="semua", $cari=Null)
 {
 	$db = dbConnect();

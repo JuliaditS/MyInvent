@@ -82,12 +82,21 @@ include '../includes/header.php';
                     <th class="col-md-1">Aksi</th>
                 </tr>
                 <?php
-                $no2 = 0;
-                while ($datakeluar = mysqli_fetch_array($querykeluar)) {
-                    $no2 = $no2 + 1;
-                ?>
+                $batas=10;
+            $data_barang = getListTransaksi(Null,Null,"keluar");
+            $halaman = (isset($_GET['halaman']))?(int)$_GET['halaman'] : 1;
+            $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;
+            $previous = $halaman - 1;
+            $next = $halaman + 1;
+
+            $jumlah_data = count($data_barang);
+            $total_halaman = ceil($jumlah_data / $batas);
+
+            $databaris = getListTransaksi($halaman_awal,$batas,"keluar"); // ambil seluruh baris data
+            $i = $halaman_awal+1;
+        foreach ($databaris as $datakeluar) { ?>
                     <tr>
-                        <td><?php echo $no2; ?></td>
+                        <td><?php echo $i; ?></td>
                         <td><?php echo $datakeluar['id_pembayaran']; ?></td>
                         <td><?php echo $datakeluar['tanggal']; ?></td>
                         <td><?php echo rupiah($datakeluar['uang_pembayaran']); ?></td>
@@ -150,10 +159,22 @@ include '../includes/header.php';
                     </tr>
 
 
-                <?php
+                <?php $i++;
                 }
                 ?>
             </table>
+            <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+              <li class="page-item <?php if($halaman==1) echo "disabled"; ?>"><a class="page-link" <?php if($halaman > 1){ echo "href='?halaman=$previous"; } ?>>Previous</a></li>
+              <?php 
+              for($x=1;$x<=$total_halaman;$x++){
+               ?>
+              <li class="page-item <?php if($halaman==$x) echo "active"; ?>"><a class="page-link" href="?halaman=<?php echo $x?>"><?php echo $x; ?></a></li>
+              <?php 
+              }
+               ?>
+              <li class="page-item <?php if($halaman>=$total_halaman) echo "disabled"; ?>"><a  class="page-link" <?php if($halaman < $total_halaman) { echo "href='?halaman=$next'"; } ?>>Next</a></li>
+            </ul>
         </div>
     </div>
 </div>
