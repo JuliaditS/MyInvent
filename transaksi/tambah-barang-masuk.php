@@ -180,7 +180,23 @@ if (isset($_POST['submit'])) {
             reverse: true
         });
     })
-
+    setInterval(function(){
+        if (document.getElementById("totalharga").value == 0 ||document.getElementById("totalharga").value == "") {
+            document.getElementById("uangbayar").disabled=true;
+            document.getElementById("uangbayar").value = "";
+            document.getElementById("uangkembali").value = "";
+        } else {
+            document.getElementById("uangbayar").disabled=false;
+            var uangbayar = (document.getElementById("uangbayar").value * 1);
+            var totalharga = document.getElementById("totalharga").value;
+            if (uangbayar < totalharga) {
+                document.getElementById("uangkembali").value = "Uang kurang";
+            } else {
+                document.getElementById("uangkembali").value = uangbayar - totalharga;
+            }
+        }
+    }, 10);
+    
     function pembayaran(angka) {
         var hilangkantitik = angka.value.replace(".", "");
         var hilangkantitik2 = hilangkantitik.replace(".", "");
