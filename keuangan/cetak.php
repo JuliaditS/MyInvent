@@ -34,24 +34,38 @@ $pdf->SetFont('Arial','','10');
 $pdf->SetFillColor(255,0,0);
 $pdf->SetTextColor(255);
 $pdf->SetDrawColor(128,0,0);
-foreach ($header as $kolom) {
-	$pdf->Cell($kolom['length'], 5, $kolom['label'], 1, '0', $kolom['align'], true);
-}
-$pdf->Ln();
+// foreach ($header as $kolom) {
+// 	$pdf->Cell($kolom['length'], 5, $kolom['label'], 1, '0', $kolom['align'], true);
+// }
+// $pdf->Ln();
+$width_cell=array(20,50,40,40,40);
+$pdf->Cell($width_cell[0],10,'No.',1,0,'C',true);
+//Second header column//
+$pdf->Cell($width_cell[1],10,'Tanggal',1,0,'C',true);
+//Third header column//
+$pdf->Cell($width_cell[2],10,'Transaksi Masuk',1,0,'C',true); 
+//Fourth header column//
+$pdf->Cell($width_cell[3],10,'Transaksi Keluar',1,0,'C',true);
+//Third header column//
+$pdf->Cell($width_cell[4],10,'Pendapatan',1,1,'C',true);
  
 #tampilkan data tabelnya
 $pdf->SetFillColor(224,235,255);
 $pdf->SetTextColor(0);
 $pdf->SetFont('');
 $fill=false;
-foreach ($data as $baris) {
-	$i = 0;
-	foreach ($baris as $cell) {
-		$pdf->Cell($header[$i]['length'], 5, $cell, 1, '0', $kolom['align'], $fill);
-		$i++;
-	}
+
+foreach ($sql as $row) {
+	$i = 1;
+	$pdf->Cell($width_cell[0],10,$i,1,0,'C',$fill);
+	$pdf->Cell($width_cell[1],10,$row['tanggal'],1,0,'C',$fill);
+	$pdf->Cell($width_cell[2],10,$row['transaksi Masuk'],1,0,'L',$fill);
+	$pdf->Cell($width_cell[3],10,$row['transaksi Masuk'],1,0,'L',$fill);
+	$pdf->Cell($width_cell[4],10,'Rp. '.$row['Pendapatan'],1,0,'L',$fill);
+
+	//to give alternate background fill  color to rows//
+	$i++;
 	$fill = !$fill;
-	$pdf->Ln();
 }
  
 #output file PDF

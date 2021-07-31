@@ -144,7 +144,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 </td>
                                 <td>
-                                    <?php echo $barisdata['harga']; ?> <input type="hidden" id="harga<?php echo $barisdata['kode_barang']; ?>" value="<?php echo $barisdata['harga']; ?>">
+                                    <?php echo rupiah($barisdata['harga']); ?> <input type="hidden" id="harga<?php echo $barisdata['kode_barang']; ?>" value="<?php echo $barisdata['harga']; ?>">
                                 </td>
                                 <td>
                                     <?php echo $barisdata['stok']; ?><input type="hidden" id="stok<?php echo $barisdata['kode_barang']; ?>" value="<?php echo $barisdata['stok']; ?>">
@@ -189,7 +189,7 @@ if (isset($_POST['submit'])) {
             var uangbayar = (document.getElementById("uangbayar").value * 1);
             var totalharga = document.getElementById("totalharga").value;
             if (uangbayar < totalharga) {
-                document.getElementById("uangkembali").value = "Uang kurang";
+                document.getElementById("uangkembali").value = "Uang pembayaran kurang";
             } else {
                 document.getElementById("uangkembali").value = uangbayar - totalharga;
             }
@@ -202,7 +202,7 @@ if (isset($_POST['submit'])) {
         var uangbayar = (hilangkantitik2.replace(".", "") * 1);
         var totalharga = document.getElementById("totalharga").value;
         if (uangbayar < totalharga) {
-            document.getElementById("uangkembali").value = "Uang kurang";
+            document.getElementById("uangkembali").value = "Uang pembayaran kurang";
         } else {
             document.getElementById("uangkembali").value = uangbayar - totalharga;
         }

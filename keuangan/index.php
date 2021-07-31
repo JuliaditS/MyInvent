@@ -52,7 +52,7 @@ if(isset($_POST['cari'])){
             <td><?php echo $data['tanggal'];?></td>
             <td><?php echo $data['transaksi Masuk'];?> </td>
             <td><?php echo $data['transaksi Keluar'];?></td>
-            <td><?php echo $data['Pendapatan'];?></td>
+            <td><?php echo rupiah($data['Pendapatan']);?></td>
         </tr>
         <?php } ?>
     </table>

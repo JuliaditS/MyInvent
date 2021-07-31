@@ -130,9 +130,9 @@ include '../includes/header.php';
                                                         <tr>
                                                             <td><?php echo $nos; ?></td>
                                                             <td><?php echo $data['nama']; ?></td>
-                                                            <td><?php echo $data['harga']; ?></td>
+                                                            <td><?php echo rupiah($data['harga']); ?></td>
                                                             <td><?php echo $data['jumlah']; ?></td>
-                                                            <td><?php echo $data['Total Harga']; ?></td>
+                                                            <td><?php echo rupiah($data['Total Harga']); ?></td>
                                                         </tr>
                                                     <?php
                                                     }
