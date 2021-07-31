@@ -3,6 +3,10 @@ include '../includes/header.php';
 include '../includes/config.php';
 if (!isset($_SESSION["id_user"]))
     header("Location: ../index.php?error=2");
+if (isset($_POST['submit'])) {
+    var_dump($_POST['kode_barang']);
+    var_dump($_POST['jumlah']);
+}
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
@@ -53,13 +57,13 @@ if (!isset($_SESSION["id_user"]))
             <div class="row">
                 <div class="col-md-6">
                     <div class="info-form">
-                        <form action="" class="form-inline justify-content-center">
+                        <form action="" method="POST" class="form-inline justify-content-center">
                             <div class="row g-3 align-items-center mb-3">
                                 <div class="col-md-3">
                                     <label class="col-form-label">Total Harga</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control format-angka" readonly=""></input>
+                                    <input type="text" id="totalharga" class="form-control format-angka" readonly=""></input>
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center mb-3">
@@ -67,7 +71,7 @@ if (!isset($_SESSION["id_user"]))
                                     <label class="col-form-label">Uang Pembayaran</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control format-angka">
+                                    <input type="text" class="form-control format-angka" id="uangbayar" onkeyup="pembayaran(this)">
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center mb-3">
@@ -75,7 +79,7 @@ if (!isset($_SESSION["id_user"]))
                                     <label class="col-form-label">Uang Kembalian</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control format-angka" readonly="">
+                                    <input type="text" class="form-control format-angka" id="uangkembali" readonly="">
                                 </div>
                             </div>
                             
@@ -105,20 +109,20 @@ if (!isset($_SESSION["id_user"]))
                                 <tr>
                                     <td>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="<?php echo $barisdata['kode_barang']; ?>" id="flexCheckDefault">
+                                            <input class="form-check-input" type="checkbox" value="<?php echo $barisdata['kode_barang']; ?>" id="<?php echo $barisdata['kode_barang']; ?>" name="kode_barang[]" onclick="myFunction(this)">
                                             <label class="form-check-label" for="flexCheckDefault">
                                                 <?php echo $barisdata['nama']; ?>
                                             </label>
                                         </div>
                                     </td>
                                     <td>
-                                        <?php echo $barisdata['harga']; ?>
+                                        <?php echo $barisdata['harga']; ?> <input type="hidden" id="harga<?php echo $barisdata['kode_barang']; ?>" value="<?php echo $barisdata['harga']; ?>">
                                     </td>
                                     <td>
-                                        <?php echo $barisdata['stok']; ?>
+                                        <?php echo $barisdata['stok']; ?><input type="hidden" id="stok<?php echo $barisdata['kode_barang']; ?>" value="<?php echo $barisdata['stok']; ?>">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" name="jumlah">
+                                        <input type="number" min="1" id="jumlah<?php echo $barisdata['kode_barang']; ?>" class="form-control" name="jumlah[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="nambahangka(this)" onkeyup="nambahangka(this)" disabled>
                                     </td>
                                 </tr>
 
@@ -129,14 +133,69 @@ if (!isset($_SESSION["id_user"]))
                         
                     </table>
                 </div>
-                </form>
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-dark ">Simpan</button>
+                    <button type="submit" class="btn btn-dark " name="submit">Simpan</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
 </section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Format mata uang.
+        $('.format-angka').mask('0.000.000.000', {
+            reverse: true
+        });
+    })
+    function pembayaran(angka){
+        var hilangkantitik =angka.value.replace(".","");
+        var hilangkantitik2= hilangkantitik.replace(".","");
+        var uangbayar=(hilangkantitik2.replace(".","")*1);
+        var totalharga = document.getElementById("totalharga").value;
+        if (uangbayar < totalharga) {
+            document.getElementById("uangkembali").value="Uang kurang";
+        } else {
+            document.getElementById("uangkembali").value=uangbayar-totalharga;
+        }
+    }
+    var ha=document.getElementById("totalharga").value;
+    function nambahangka(angka){
+        var totalharga = document.getElementById("totalharga").value;
+        var kodebarang =angka.id.substring(6);
+        var hargabarang = document.getElementById("harga"+kodebarang).value;
+        var totalhargasementara = hargabarang * angka.value;
+        document.getElementById("totalharga").value = ha+totalhargasementara;
+        // var checkbox=document.getElementById(kodebarang);
+        // if (checkbox.checked==true) {
+        //     document.getElementById("totalharga").value = totalharga + totalhargasementara;
+        // } else {
+
+        // }
+    }
+    function myFunction(test) {
+      // Get the checkbox
+      var checkBox = test.value;
+      var hargabarang = document.getElementById("harga"+test.value).value;
+      var totalhargasementara = hargabarang * document.getElementById("jumlah"+test.value).value;
+      // Get the output text
+      // var text = document.getElementById("jumlah");
+      ha=(document.getElementById("totalharga").value*1);
+      // If the checkbox is checked, display the output text
+      if (test.checked == true){
+        document.getElementById("jumlah"+test.value).disabled = false;
+        document.getElementById("jumlah"+test.value).value = "1";
+        totalhargasementara = hargabarang * document.getElementById("jumlah"+test.value).value;
+        document.getElementById("totalharga").value = ha+totalhargasementara;
+      } else {
+        document.getElementById("totalharga").value = ha-totalhargasementara;
+        document.getElementById("jumlah"+test.value).value = "";
+        document.getElementById("jumlah"+test.value).disabled = true;
+      }
+    } 
+</script>
 <?php
 include '../includes/footer.php';
 ?>
