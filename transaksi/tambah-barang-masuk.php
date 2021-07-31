@@ -4,8 +4,26 @@ include '../includes/config.php';
 if (!isset($_SESSION["id_user"]))
     header("Location: ../index.php?error=2");
 if (isset($_POST['submit'])) {
-    var_dump($_POST['kode_barang']);
-    var_dump($_POST['jumlah']);
+    //getarray
+    $kdbrg = $_POST['kode_barang'];
+    $jumlah= $_POST['jumlah'];
+    $total = $_POST['total'];
+    $bayar = $_POST['bayar'];
+    $kemb  = $_POST['kembalian'];
+    $iduser= $_SESSION['id_user'];
+    $date  = date("Y-m-d");
+    mysqli_query($conn, "INSERT INTO `t_pembayaran` (`id_pembayaran`, `total_harga`, `uang_pembayaran`, `uang_kembalian`, `tanggal`, `tipe`, `id_user`) VALUES (NULL, '$total', '$bayar', '$kemb', '$date', 'masuk', '$iduser')");
+    $id_pem = 1 + mysqli_num_rows(mysqli_query($conn, "Select * from t_pembayaran"));
+    
+    $no = -1;
+    foreach($kdbrg as $vkdbrg){
+        $no = $no + 1;
+        mysqli_query($conn, "INSERT INTO `t_transaksi` (`id_pembayaran`, `kode_barang`, `jumlah`) VALUES ('$id_pem', '$vkdbrg', '$jumlah[$no]')");
+        $tmpbarang = mysqli_fetch_array(mysqli_query($conn, "select * from t_barang where kode_barang='$vkdbrg'"));
+        $tmpstok =$jumlah[$no] + $tmpbarang['stok'];
+        mysqli_query($conn,"UPDATE `t_barang` SET `stok` = '$tmpstok' WHERE `t_barang`.`kode_barang` = '$vkdbrg'");  
+    }
+
 }
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -63,7 +81,7 @@ if (isset($_POST['submit'])) {
                                     <label class="col-form-label">Total Harga</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" id="totalharga" class="form-control format-angka" readonly=""></input>
+                                    <input type="text" id="totalharga" name="total" class="form-control format-angka" readonly=""></input>
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center mb-3">
@@ -71,7 +89,7 @@ if (isset($_POST['submit'])) {
                                     <label class="col-form-label">Uang Pembayaran</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control format-angka" id="uangbayar" onkeyup="pembayaran(this)">
+                                    <input type="text" required class="form-control" id="uangbayar" name="bayar" onkeyup="pembayaran(this)">
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center mb-3">
@@ -79,7 +97,7 @@ if (isset($_POST['submit'])) {
                                     <label class="col-form-label">Uang Kembalian</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control format-angka" id="uangkembali" readonly="">
+                                    <input type="text" class="form-control format-angka" name="kembalian" id="uangkembali" readonly="">
                                 </div>
                             </div>
                             
