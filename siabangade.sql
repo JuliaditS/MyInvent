@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Jul 2021 pada 14.50
+-- Waktu pembuatan: 01 Agu 2021 pada 16.40
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 8.0.3
 
@@ -39,10 +39,10 @@ CREATE TABLE `t_barang` (
 --
 
 INSERT INTO `t_barang` (`kode_barang`, `nama`, `harga`, `stok`) VALUES
-('BRG00001', 'Raket TOHO', 65000, 5),
-('BRG00002', 'Lampu HANNOCS 35 Watt', 26000, 40),
-('BRG00003', 'Pena Standart Hitam', 2000, 120),
-('BRG00004', 'Pena Pilot Biru', 3000, 48),
+('BRG00001', 'Raket TOHO', 65000, 1),
+('BRG00002', 'Lampu HANNOCS 35 Watt', 26000, 42),
+('BRG00003', 'Pena Standart Hitam', 2000, 91),
+('BRG00004', 'Pena Pilot Biru', 3000, 43),
 ('BRG00005', 'Buku agenda sedang', 10000, 10);
 
 -- --------------------------------------------------------
@@ -61,6 +61,29 @@ CREATE TABLE `t_pembayaran` (
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
+--
+-- Dumping data untuk tabel `t_pembayaran`
+--
+
+INSERT INTO `t_pembayaran` (`id_pembayaran`, `total_harga`, `uang_pembayaran`, `uang_kembalian`, `tanggal`, `tipe`, `id_user`) VALUES
+(1, 195000, 200000, 5000, '2021-07-31', 'masuk', 11),
+(2, 91000, 100000, 9000, '2021-07-31', 'masuk', 11),
+(3, 195000, 200000, 5000, '2021-07-31', 'keluar', 11),
+(4, 53000, 70000, 17000, '2021-07-31', 'keluar', 11),
+(5, 221000, 250000, 29000, '2021-07-31', 'keluar', 11),
+(6, 169000, 200000, 31000, '2021-07-31', 'masuk', 11),
+(7, 65000, 100000, 35000, '2021-07-31', 'masuk', 11),
+(8, 65000, 100000, 35000, '2021-07-31', 'keluar', 11),
+(9, 195000, 200000, 5000, '2021-07-31', 'keluar', 11),
+(10, 20000, 20000, 0, '2021-07-31', 'keluar', 11),
+(11, 8000, 10000, 2000, '2021-08-01', 'keluar', 11),
+(12, 78000, 100000, 22000, '2021-08-01', 'masuk', 11),
+(13, 27000, 30000, 3000, '2021-08-01', 'masuk', 11),
+(14, 12000, 15000, 3000, '2021-08-01', 'keluar', 11),
+(15, 130000, 150000, 20000, '2021-08-01', 'keluar', 11),
+(16, 28000, 30000, 2000, '2021-08-01', 'masuk', 11),
+(17, 35000, 40000, 5000, '2021-08-01', 'keluar', 11);
+
 -- --------------------------------------------------------
 
 --
@@ -72,6 +95,37 @@ CREATE TABLE `t_transaksi` (
   `kode_barang` varchar(10) COLLATE armscii8_bin NOT NULL,
   `jumlah` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+--
+-- Dumping data untuk tabel `t_transaksi`
+--
+
+INSERT INTO `t_transaksi` (`id_pembayaran`, `kode_barang`, `jumlah`) VALUES
+(1, 'BRG00001', 2),
+(1, 'BRG00002', 2),
+(2, 'BRG00001', 1),
+(2, 'BRG00002', 1),
+(3, 'BRG00001', 2),
+(3, 'BRG00002', 2),
+(4, 'BRG00002', 1),
+(4, 'BRG00004', 9),
+(5, 'BRG00001', 1),
+(5, 'BRG00002', 6),
+(6, 'BRG00001', 1),
+(6, 'BRG00002', 4),
+(7, 'BRG00001', 1),
+(8, 'BRG00001', 1),
+(9, 'BRG00001', 3),
+(10, 'BRG00003', 10),
+(11, 'BRG00003', 4),
+(12, 'BRG00002', 3),
+(13, 'BRG00004', 9),
+(14, 'BRG00003', 6),
+(15, 'BRG00001', 2),
+(16, 'BRG00002', 1),
+(16, 'BRG00003', 1),
+(17, 'BRG00003', 10),
+(17, 'BRG00004', 5);
 
 -- --------------------------------------------------------
 
@@ -92,11 +146,11 @@ CREATE TABLE `t_user` (
 
 INSERT INTO `t_user` (`id_user`, `username`, `password`, `nama`) VALUES
 (4, 'resaendr', '2c9f0615ca2e463732f1f146adcfa6e9', 'Resa Endrawan'),
-(5, 'adekur22', 'ca8da06d9c842df61ad24e996a577572', 'Ade Kurniawan'),
+(5, 'adekur223', '08923e5f9f8e387d2a29684a46ea6af7', 'Ade Kurniawannn'),
 (7, 'juliadit666', '907dbf7425889a23284794aeb5069ae2', 'Juliadit Syahputra'),
 (8, 'sidiqqqqq', '6bdcd2946bae31321c8d8eb3ce960951', 'Sidiq Sanjaya Bakti'),
 (9, 'asul02', 'c59e19e1f0bcb7b1e331652ad45221a4', 'Asul Supriatna'),
-(10, 'afi', 'a963c09f1ea9aef6f5013e139e14c75d', 'Fildzah'),
+(10, 'afi', 'a963c09f1ea9aef6f5013e139e14c75d', 'Fildzah Safirah Lutfi'),
 (11, 'admin', '0192023a7bbd73250516f069df18b500', 'admin');
 
 --
@@ -134,10 +188,16 @@ ALTER TABLE `t_user`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `t_pembayaran`
+--
+ALTER TABLE `t_pembayaran`
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT untuk tabel `t_user`
 --
 ALTER TABLE `t_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
